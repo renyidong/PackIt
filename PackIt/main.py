@@ -1,7 +1,7 @@
-from flask import request
+from flask import request, render_template
 
 from . import app
 
 @app.route("/")
-def hello():
-    return "HeLlO"
+def home():
+    return render_template('home.html')
