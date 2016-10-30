@@ -1,0 +1,317 @@
+
+<!DOCTYPE html>
+<html class="ui-mobile">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>New Event</title>
+    <!--<link rel="stylesheet" href="./css/frozen.css">-->
+    <link rel="stylesheet" href="./css/demo.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/jquery.mobile-1.4.5.css">
+    <link rel="stylesheet" href="./plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
+    <link rel="stylesheet" href="./plugins/iCheck/css/flat/blue.css">
+    <link rel="stylesheet" href="./plugins/bootstrap-slider/css/bootstrap-slider.min.css">
+    <link rel="stylesheet" href="./plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.css">
+    <link rel="stylesheet" href="./css/font-awesome.min.css">
+
+    <!--<script src="./js/jquery-1.8.3.js"></script>-->
+    <script src="http://code.jquery.com/jquery-3.1.1.js"></script>
+    <script src="./js/jquery.mobile-1.4.5.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./plugins/iCheck/js/icheck.js"></script>
+    <script src="./plugins/bootstrap-slider/js/bootstrap-slider.min.js"></script>
+    <script src="./plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+    <script src="./plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="./js/zepto.min.js"></script>
+    <script src="./js/frozen.js"></script>
+</head>
+<body class="ui-mobile-viewport ui-overlay-a">
+
+<div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-footer-fixed ui-page-active" id="choosing-page">
+    <div data-role="header" class="jqm-header ui-header" role="banner">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <div class="col-xs-2"><a href="newEvent.html" class="fa fa-chevron-left fa-2x pull-left" style="margin: 10px;"></a></div>
+                    <div class="col-xs-8" style="text-align: center;margin-top: 10px">
+                        <span class="h3">Choosing Items</span>
+                    </div>
+                    <div class="col-xs-2"><button class="btn btn-link fa fa-plus fa-2x pull-right"></button></div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div role="main" class="ui-content jqm-content container-fluid" style="background-color: #ffffff;margin-top: 50px;">
+        <form class="form-horizontal" role="form" id="activity-form">
+            <fieldset>
+                <div class="row form-group category">
+                    <div class="category-header">Clothing</div>
+                    <div class="container-fluid">
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+                                    <span class="fa fa-info-circle"></span>
+                                </button>
+                            </span>
+                        </div>
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                        </div>
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                        </div>
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="form-control-label">Recipient:</label>
+                                            <input type="text" class="form-control" id="recipient-name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message-text" class="form-control-label">Message:</label>
+                                            <textarea class="form-control" id="message-text"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Send message</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row form-group category">
+                    <div class="category-header">Clothing</div>
+                    <div class="container-fluid">
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                        </div>
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                        </div>
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                        </div>
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row form-group category">
+                    <div class="category-header">Clothing</div>
+                    <div class="container-fluid">
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                        </div>
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                        </div>
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                        </div>
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row form-group category">
+                <div class="category-header">Clothing</div>
+                <div class="container-fluid">
+                    <div class="input-group category-item">
+                        <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                        <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                        <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                    </div>
+                    <div class="input-group category-item">
+                        <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                        <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                        <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                    </div>
+                    <div class="input-group category-item">
+                        <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                        <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                        <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                    </div>
+                    <div class="input-group category-item">
+                        <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                        <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                        <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                    </div>
+                </div>
+
+
+            </div>
+                <div class="row form-group category">
+                    <div class="category-header">Clothing</div>
+                    <div class="container-fluid">
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                        </div>
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                        </div>
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                        </div>
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Suit">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button"><span class="fa fa-info-circle"></span></button>
+                            </span>
+                        </div>
+                    </div>
+
+
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <div data-role="footer" class="jqm-footer ui-footer">
+        <nav class="navbar navbar-default navbar-fixed-bottom">
+            <div class="container">
+                <div class="navbar-header">
+                    <div class="col-xs-4">
+                        <div class="dropup">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Arrange by
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <li><a href="#">By Category</a></li>
+                                <li><a href="#">By Activity</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="dropup">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Select
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <li><a href="#">Select None</a></li>
+                                <li><a href="#">Select All</a></li>
+                                <li><a href="#">Mark Selected Unpacked</a></li>
+                                <li><a href="#">Mark Selected packed</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <button class="btn btn-primary">Pack All</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+</div>
+
+<script>
+    $('input').iCheck({
+        checkboxClass: 'icheckbox_flat-blue',
+        radioClass: 'iradio_flat-blue'
+    });
+    $('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        modal.find('.modal-title').text('New message to ' + recipient)
+        modal.find('.modal-body input').val(recipient)
+    })
+</script>
+
+
+</body>
+</html>
