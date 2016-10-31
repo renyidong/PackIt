@@ -26,11 +26,11 @@ def do_signup():
         flash('Error of signup')
         return redirect(url_for('signup'), code=303)
 
-@app.route('/user/login')
+@app.route('/login')
 def login():
-    return render_template('login.html')
+    return render_template('index.html')
 
-@app.route('/user/login', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def do_login():
     if get_login():
         return redirect(url_for('main'), code=303)

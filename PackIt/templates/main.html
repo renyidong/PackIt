@@ -103,10 +103,10 @@
 //        location.href= 'index.html';
 //    });
         $('.ui-header .ui-btn-add').click(function () {
-            location.href= 'newEvent.html';
+            location.href= "{{ url_for('new_event') }}";
         });
         $("#createEventBtn").on("tap", function () {
-            window.location.href = "newEvent.html";
+            window.location.href = "{{ url_for('new_event') }}";
         });
     });
 
