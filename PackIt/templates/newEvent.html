@@ -321,7 +321,7 @@
         $("#displayQuantity").bootstrapSwitch();
         $("#remindMe").bootstrapSwitch();
         $("#selectActivitySubmit").on("tap", function(){
-           window.location.href = "selectActivity.html";
+           window.location.href = "{{ url_for('set_activity') }}";
         });
     });
 </script>
