@@ -18,22 +18,19 @@
     <div role="main" class="ui-content jqm-content container-fluid" style="background-color: #ffffff;margin-top: 50px;">
         <form class="form-horizontal" role="form" id="activity-form">
             <fieldset>
-                {% for category in packingList %}
+                {% for item in packingList %}
                 <div class="row form-group category">
-                    <div class="category-header">{{ category.name }}</div>
                     <div class="container-fluid">
-                        {% for item in category %}
                         <div class="input-group category-item">
                             <span class="input-group-addon category-item-check"><input type="checkbox"></span>
                             <input type="text" class="form-control category-item-detail" disabled value="{{ item.name }}">
                             <span class="input-group-btn">
                                 <button class="btn btn-default category-item-info" type="button" data-toggle="modal"
-                                        data-target="#itemDetail" data-itemName="{{ item.name }} data-itemCategory="{{ category.name }}">
+                                        data-target="#itemDetail" data-itemName="{{ item.name }}">
                                     <span class="fa fa-info-circle"></span>
                                 </button>
                             </span>
                         </div>
-                        {% endfor %}
                     </div>
                 </div>
                 {% endfor %}
@@ -118,11 +115,11 @@
     $('#itemDetail').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         var itemName = button.data('itemName') // Extract info from data-* attributes
-        var categoryName = button.data('categoryName')
+        //var categoryName = button.data('categoryName')
 
         var modal = $(this)
         modal.find('.modal-body #item-name').val(itemName)
-        modal.find('.modal-body #category-name').val(categoryName)
+        //modal.find('.modal-body #category-name').val(categoryName)
     })
 </script>
 
