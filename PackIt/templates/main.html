@@ -1,31 +1,5 @@
-<!DOCTYPE html>
-<html class="ui-mobile">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
-    <title>New Event</title>
-    <!--<link rel="stylesheet" href="./css/frozen.css">-->
-    <link rel="stylesheet" href="/static/css/demo.css">
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/jquery.mobile-1.4.5.css">
-    <link rel="stylesheet" href="/static/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
-    <link rel="stylesheet" href="/static/plugins/iCheck/css/flat/blue.css">
-    <link rel="stylesheet" href="/static/plugins/bootstrap-slider/css/bootstrap-slider.min.css">
-    <link rel="stylesheet" href="/static/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.css">
-    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
-
-    <!--<script src="./js/jquery-1.8.3.js"></script>-->
-    <script src="http://code.jquery.com/jquery-3.1.1.js"></script>
-    <script src="/static/js/jquery.mobile-1.4.5.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/plugins/iCheck/js/icheck.js"></script>
-    <script src="/static/plugins/bootstrap-slider/js/bootstrap-slider.min.js"></script>
-    <script src="/static/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-    <script src="/static/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="/static/js/zepto.min.js"></script>
-    <script src="/static/js/frozen.js"></script>
-</head>
-<body class="ui-mobile-viewport ui-overlay-a">
+{% extends "base.html" %}
+{% block body %}
 <div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-footer-fixed ui-page-active" id="main-page">
     <div data-role="header" class="jqm-header ui-header" role="banner">
         <nav class="navbar navbar-default navbar-fixed-top">
@@ -60,8 +34,59 @@
         </div>
     </div>
 
-    <div role="main" class="ui-content jqm-content container-fluid" style="background-color: #ffffff;margin-top: 50px;" id="planPage">
+    <div role="main" class="ui-content jqm-content container-fluid" style="background-color: #ffffff;margin-top: 50px;">
+        <form class="form-horizontal" role="form" id="activity-form">
+            <fieldset>
+                {% for category in packingList %}
+                <div class="row form-group category">
+                    <div class="category-header">{{ category.name }}</div>
+                    <div class="container-fluid">
+                        {% for item in category %}
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="{{ item.name }}">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button" data-toggle="modal"
+                                        data-target="#itemDetail" data-itemName="{{ item.name }} data-itemCategory="{{ category.name }}">
+                                    <span class="fa fa-info-circle"></span>
+                                </button>
+                            </span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
 
+                <div class="modal fade" id="itemDetail" tabindex="-1" role="dialog" aria-labelledby="itemDetailLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h4 class="modal-title" id="itemDetailLabel">Edit Item</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="item-name" class="form-control-label">Item Name:</label>
+                                        <input type="text" class="form-control" id="item-name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="category-name" class="form-control-label">Item Name:</label>
+                                        <input type="text" class="form-control" id="category-name">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
     </div>
 
     <div data-role="footer" class="jqm-footer ui-footer">
@@ -99,9 +124,7 @@
                 location.href= $(this).data('href');
             }
         });
-//    $('.ui-header .ui-btn').click(function(){
-//        location.href= 'index.html';
-//    });
+
         $('.ui-header .ui-btn-add').click(function () {
             location.href= "{{ url_for('new_event') }}";
         });
@@ -111,5 +134,4 @@
     });
 
 </script>
-</body>
-</html>
+{% endblock %}

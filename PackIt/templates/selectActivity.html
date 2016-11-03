@@ -1,32 +1,5 @@
-
-<!DOCTYPE html>
-<html class="ui-mobile">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
-    <title>New Event</title>
-    <!--<link rel="stylesheet" href="./css/frozen.css">-->
-    <link rel="stylesheet" href="/static/css/demo.css">
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/jquery.mobile-1.4.5.css">
-    <link rel="stylesheet" href="/static/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css">
-    <link rel="stylesheet" href="/static/plugins/iCheck/css/flat/blue.css">
-    <link rel="stylesheet" href="/static/plugins/bootstrap-slider/css/bootstrap-slider.min.css">
-    <link rel="stylesheet" href="/static/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.css">
-    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
-
-    <!--<script src="./js/jquery-1.8.3.js"></script>-->
-    <script src="http://code.jquery.com/jquery-3.1.1.js"></script>
-    <script src="/static/js/jquery.mobile-1.4.5.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/plugins/iCheck/js/icheck.js"></script>
-    <script src="/static/plugins/bootstrap-slider/js/bootstrap-slider.min.js"></script>
-    <script src="/static/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-    <script src="/static/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="/static/js/zepto.min.js"></script>
-    <script src="/static/js/frozen.js"></script>
-</head>
-<body class="ui-mobile-viewport ui-overlay-a">
+{% extends "base.html" %}
+{% block body %}
 
 <div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-footer-fixed ui-page-active" id="activity-page">
     <div data-role="header" class="jqm-header ui-header" role="banner">
@@ -41,13 +14,13 @@
 
 
     </div>
-
-    <div role="main" class="ui-content jqm-content container-fluid" style="background-color: #00ffff;margin-top: 50px;">
-        <form class="form-horizontal" role="form" id="activity-form">
-            <fieldset>
+    <form method="post" action="" class="form-horizontal" role="form" id="activity-form">
+        <fieldset>
+            <div role="main" class="ui-content jqm-content container-fluid" style="background-color: #00ffff;margin-top: 50px;">
                 <div class="row form-group">
                     <div class="col-xs-4">
                         <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Sports" style="display: none;">
                             <div class="content">
                                 <div class="container-fluid">
                                     <div>
@@ -62,6 +35,7 @@
                     </div>
                     <div class="col-xs-4">
                         <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Swimming" style="display: none;">
                             <div class="content">
                                 <div class="container-fluid">
                                     <div>
@@ -76,6 +50,7 @@
                     </div>
                     <div class="col-xs-4">
                         <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Bicycling" style="display: none;">
                             <div class="content">
                                 <div class="container-fluid">
                                     <div>
@@ -92,6 +67,7 @@
                 <div class="row form-group">
                     <div class="col-xs-4">
                         <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Conference" style="display: none;">
                             <div class="content">
                                 <div class="container-fluid">
                                     <div>
@@ -106,6 +82,7 @@
                     </div>
                     <div class="col-xs-4">
                         <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Snow Sports" style="display: none;">
                             <div class="content">
                                 <div class="container-fluid">
                                     <div>
@@ -120,6 +97,7 @@
                     </div>
                     <div class="col-xs-4">
                         <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Party" style="display: none;">
                             <div class="content">
                                 <div class="container-fluid">
                                     <div>
@@ -136,6 +114,7 @@
                 <div class="row form-group">
                     <div class="col-xs-4">
                         <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Fancy Dinner" style="display: none;">
                             <div class="content">
                                 <div class="container-fluid">
                                     <div>
@@ -150,6 +129,7 @@
                     </div>
                     <div class="col-xs-4">
                         <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Working" style="display: none;">
                             <div class="content">
                                 <div class="container-fluid">
                                     <div>
@@ -164,6 +144,7 @@
                     </div>
                     <div class="col-xs-4">
                         <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Shopping" style="display: none;">
                             <div class="content">
                                 <div class="container-fluid">
                                     <div>
@@ -184,7 +165,7 @@
 
                 <div class="row form-group">
                     <div class="col-xs-4">
-                        <div class="square-responsive">
+                        <div class="square-responsive-custome">
                             <div class="content">
                                 <div class="container-fluid">
                                     <div>
@@ -198,25 +179,34 @@
                         </div>
                     </div>
                 </div>
-            </fieldset>
-        </form>
-    </div>
+            </div>
 
-    <div data-role="footer" class="jqm-footer ui-footer ui-bar-inherit ui-footer-fixed slideup">
-        <button class="btn btn-block btn-default" id="beginPackingSubmit">Begin Packing</button>
-    </div>
+            <div data-role="footer" class="jqm-footer ui-footer ui-bar-inherit ui-footer-fixed slideup">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-default" id="beginPackingSubmit">Begin Packing</button>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
 
 </div>
 
 <script>
     $(document).ready(function(){
         $("#beginPackingSubmit").on("tap", function(){
-            window.location.href = "packing.html";
+            history.back();
+        });
+        $('.square-responsive').on('tap', function () {
+            $(this).toggleClass('red');
+            //$('.square-responsive .square-input').each(function(){this.checked = !this.checked;});
+            if($(this).find("input").attr('checked')){
+                $(this).find("input").removeAttr('checked');
+            }else{
+                $(this).find("input").attr('checked','checked');
+            }
+
         });
     });
 </script>
-
-
-
-</body>
-</html>
+{% endblock %}

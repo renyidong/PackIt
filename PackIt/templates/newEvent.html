@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% block body %}
+
 <div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-footer-fixed ui-page-active" id="new-event-page">
     <div data-role="header" class="jqm-header ui-header" role="banner">
         <h2 class="ui-header" role="heading">Pack IT</h2>
     </div>
     <div data-role="main" class="ui-content jqm-content" style="background-color: #00ffff">
-        <form class="form-horizontal form-inline" role="form">
+        <form method="post" action="" class="form-horizontal form-inline" role="form">
             <fieldset>
                 <div class="form-group" style="text-align: center">
                     <h4>New Event</h4>
@@ -64,22 +65,16 @@
 
                 </div>
 
-                <div class="form-group" style="background-color: #ffffff;padding: 10px 0;">
+                <div id="remindTimeSelectPanel" class="form-group" style="display: none; background-color: #ffffff;margin-bottom: 1px;">
                     <div class="controls">
-                        <div class="col-xs-5">
-                            <label class="control-label">0<span>  hours</span></label>
-                            <input id="remindTime" type="hidden" value="0" />
-                        </div>
-                        <div class="col-xs-7" style="text-align: right">
-                            <button class="btn btn-toolbar"><i class="fa fa-plus"></i></button>
-                            <button class="btn btn-toolbar"><i class="fa fa-minus"></i></button>
-                        </div>
+                        <input id="remindTimePicker" class="span2 form-control" data-date-format="mm-dd-yyyy hh:ii" size="16" type="text" value="" placeholder="Select Remind Time" >
+                        <span class="add-on"><i class="icon-th"></i></span>
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" style="margin-top: 14px;">
                     <div class="col-xs-offset-4 controls">
-                        <button class="btn btn-default" id="selectActivitySubmit">Select Activities</button>
+                        <button type="submit" class="btn btn-default" id="selectActivitySubmit">Select Activities</button>
                     </div>
                 </div>
 
@@ -101,11 +96,36 @@
             minView: 'month',
             autoclose: 'true'
         });
+        $('#remindTimePicker').datetimepicker({
+            minView: 'day',
+            autoclose: 'true'
+        });
 
         $("#displayQuantity").bootstrapSwitch();
         $("#remindMe").bootstrapSwitch();
+        $('#remindMe').on('switchChange.bootstrapSwitch', function(event, state) {
+            if(state){
+                $('#remindTimeSelectPanel').css('display','block');
+            }else{
+                $('#remindTimeSelectPanel').css('display','none');
+            }
+        });
         $("#selectActivitySubmit").on("tap", function(){
            window.location.href = "{{ url_for('set_activity') }}";
+        });
+
+        $("#remindPlus").on("tap", function () {
+           var current = $("#remindTimeInput").val();
+            current += 1;
+            $("#remindTimeInput").val(current);
+            $("#remindTimeLabel").text(current);
+        });
+        $("#remindMinus").on("tap", function () {
+            var current = $("#remindTimeInput").val();
+            current -= 1;
+            if(current < 0) current = 0;
+            $("#remindTimeInput").val(current);
+            $("#remindTimeLabel").text(current);
         });
     });
 </script>
