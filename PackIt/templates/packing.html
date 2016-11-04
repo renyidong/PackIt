@@ -5,7 +5,7 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <div class="col-xs-2"><a href="newEvent.html" class="fa fa-chevron-left fa-2x pull-left" style="margin: 10px;"></a></div>
+                    <div class="col-xs-2"><a class="fa fa-chevron-left fa-2x pull-left" style="margin: 10px;"></a></div>
                     <div class="col-xs-8" style="text-align: center;margin-top: 10px">
                         <span class="h3">Choosing Items</span>
                     </div>
@@ -115,11 +115,9 @@
     $('#itemDetail').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         var itemName = button.data('itemName') // Extract info from data-* attributes
-        //var categoryName = button.data('categoryName')
 
         var modal = $(this)
         modal.find('.modal-body #item-name').val(itemName)
-        //modal.find('.modal-body #category-name').val(categoryName)
     })
 </script>
 

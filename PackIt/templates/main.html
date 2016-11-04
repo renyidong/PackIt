@@ -98,7 +98,6 @@
                 location.href= $(this).data('href');
             }
         });
-
         $('.ui-header .ui-btn-add').click(function () {
             location.href= "{{ url_for('new_event') }}";
         });
@@ -106,6 +105,5 @@
             window.location.href = "{{ url_for('new_event') }}";
         });
     });
-
 </script>
 {% endblock %}
