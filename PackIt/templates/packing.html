@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block more_head %}
 <link rel="stylesheet" href="/static/plugins/iCheck/css/flat/red.css">
-<script src="/static/plugins/iCheck/js/iCheck.min.js"></script>
+<script src="/static/plugins/iCheck/js/icheck.min.js"></script>
 {% endblock %}
 {% block body %}
 <div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-footer-fixed ui-page-active" id="choosing-page">
@@ -22,7 +22,7 @@
     </div>
 
     <div role="main" class="ui-content jqm-content container-fluid" style="background-color: #ffffff;margin-top: 50px;">
-        <form ethod="post" action="" class="form-horizontal" role="form" id="itemSelectForm">
+        <form method="post" class="form-horizontal" role="form" id="itemSelectForm">
             <fieldset>
                 <div class="row form-group category" >
                     <div class="container-fluid">
@@ -193,11 +193,6 @@
                 });
                 $('#itemDetail').modal('hide')
             }
-        });
-
-
-        $("#packedButtonSubmit").on("tap", function () {
-            window.location.href = "{{ url_for('packed_to_check') }}";
         });
     });
 

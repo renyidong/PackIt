@@ -51,7 +51,7 @@ class Event(db.Model):
     owner_id = Column(UUID, ForeignKey('user.id'))
     owner = relationship('User', back_populates='events', uselist=False)
     activities = relationship('Activity', back_populates='event', uselist=True)
-    lists = relationship('ItemList', back_populates='event', uselist=True) 
+    lists = relationship('ItemList', back_populates='event', uselist=True)
 
 class Activity(db.Model):
     __tablename__ = 'activity'
@@ -71,6 +71,7 @@ class ItemList(db.Model):
     owner = relationship('User', uselist=False)
     items = relationship('Item', back_populates='list', uselist=True)
     
+    
 class Item(db.Model):
     __tablename__ = 'item'
     id = Column(UUID, primary_key=True)
@@ -78,7 +79,7 @@ class Item(db.Model):
     owner_id = Column(UUID, ForeignKey('user.id'))
     owner = relationship('User')
     list_id = Column(UUID, ForeignKey('item_list.id'))
-    list = relationship('List', back_populates='items', uselist=False)
+    list = relationship('ItemList', back_populates='items', uselist=False)
     activity_id = Column(UUID, ForeignKey('activity.id'))
     activity = relationship('Activity', back_populates='items', uselist=False)
     checked_by = relationship("User", secondary='checked', uselist=True)

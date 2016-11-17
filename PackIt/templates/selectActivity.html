@@ -13,7 +13,7 @@
 
 
     </div>
-    <form method="post" action="" class="form-horizontal" role="form" id="activity-form">
+    <form method="post" class="form-horizontal" role="form" id="activity-form">
         <fieldset>
             <div role="main" class="ui-content jqm-content container-fluid" style="background-color: #00ffff;margin-top: 50px;">
                 <div class="row form-group">
@@ -202,10 +202,6 @@
                 $(this).find("input").attr('checked','checked');
             }
 
-        });
-
-        $("#beginPackingSubmit").on("tap", function () {
-            window.location.href = "{{ url_for('packing_list') }}";
         });
     });
 </script>

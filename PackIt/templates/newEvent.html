@@ -6,7 +6,7 @@
         <h2 class="ui-header" role="heading">Pack IT</h2>
     </div>
     <div data-role="main" class="ui-content jqm-content" style="background-color: #00ffff">
-        <form method="post" action="" class="form-horizontal form-inline" role="form">
+        <form method="post" class="form-horizontal form-inline" role="form">
             <fieldset>
                 <div class="form-group" style="text-align: center">
                     <h4>New Event</h4>
@@ -102,9 +102,6 @@
             }else{
                 $('#remindTimeSelectPanel').css('display','none');
             }
-        });
-        $("#selectActivitySubmit").on("tap", function(){
-           window.location.href = "{{ url_for('set_activity') }}";
         });
 
         $("#remindPlus").on("tap", function () {
