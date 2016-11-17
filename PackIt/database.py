@@ -4,6 +4,12 @@ from sqlalchemy.types import TypeDecorator, CHAR
 import uuid
 
 db = SQLAlchemy(app)
+Column = db.Column
+ForeignKey = db.ForeignKey
+relationship = db.relationship
+String = db.String
+DateTime = db.DateTime
+Integer = db.Integer
 
 class UUID(TypeDecorator):
     impl = CHAR
@@ -26,65 +32,65 @@ class UUID(TypeDecorator):
 
 class User(db.Model):
     __tablename__ = 'user'
-    id = db.Column(UUID, primary_key=True)
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
-    events = db.relationship('Event', back_populates='owner', uselist=True)
+    id = Column(UUID, primary_key=True)
+    email = Column(String(100), unique=True)
+    password = Column(String(100))
+    events = relationship('Event', back_populates='owner', uselist=True)
 
 
 class Event(db.Model):
     __tablename__ = 'event'
-    id = db.Column(UUID, primary_key=True)
-    title = db.Column(db.String(100))
-    destination = db.Column(db.String(100))
-    eventtype = db.Integer()
-    begin = db.DateTime(timezone=True)
-    end = db.DateTime(timezone=True)
-    remind_at = db.DateTime(timezone=True)
-    capacity = db.Integer()
-    owner_id = db.Column(UUID, db.ForeignKey('user.id'))
-    owner = db.relationship('User', back_populates='events', uselist=False)
-    activities = db.relationship('Activity', back_populates='event', uselist=True)
-    lists = db.relationship('ItemList', back_populates='event', uselist=True) 
+    id = Column(UUID, primary_key=True)
+    title = Column(String(100))
+    destination = Column(String(100))
+    eventtype = Integer()
+    begin = DateTime(timezone=True)
+    end = DateTime(timezone=True)
+    remind_at = DateTime(timezone=True)
+    capacity = Integer()
+    owner_id = Column(UUID, ForeignKey('user.id'))
+    owner = relationship('User', back_populates='events', uselist=False)
+    activities = relationship('Activity', back_populates='event', uselist=True)
+    lists = relationship('ItemList', back_populates='event', uselist=True) 
 
 class Activity(db.Model):
     __tablename__ = 'activity'
-    id = db.Column(UUID, primary_key=True)
-    title = db.Column(db.String(100))
-    event_id = db.Column(UUID, db.ForeignKey('event.id')) 
-    event = db.relationship('Event', back_populates='activities', uselist=False)
-    items = db.relationship('Item', back_populates='activity', uselist=True)
+    id = Column(UUID, primary_key=True)
+    title = Column(String(100))
+    event_id = Column(UUID, ForeignKey('event.id')) 
+    event = relationship('Event', back_populates='activities', uselist=False)
+    items = relationship('Item', back_populates='activity', uselist=True)
     
 class ItemList(db.Model):
     __tablename__ = 'item_list'
-    id = db.Column(UUID, primary_key=True)
-    title = db.Column(db.String(100))
-    event_id = db.Column(UUID, db.ForeignKey('event.id'))
-    event = db.relationship('Event', back_populates='lists', uselist=False)
-    owner_id = db.Column(UUID, db.ForeignKey('user.id'))
-    owner = db.relationship('User', uselist=False)
-    items = db.relationship('Item', back_populates='list', uselist=True)
+    id = Column(UUID, primary_key=True)
+    title = Column(String(100))
+    event_id = Column(UUID, ForeignKey('event.id'))
+    event = relationship('Event', back_populates='lists', uselist=False)
+    owner_id = Column(UUID, ForeignKey('user.id'))
+    owner = relationship('User', uselist=False)
+    items = relationship('Item', back_populates='list', uselist=True)
     
 class Item(db.Model):
     __tablename__ = 'item'
-    id = db.Column(UUID, primary_key=True)
-    title = db.Column(db.String(100))
-    owner_id = db.Column(UUID, db.ForeignKey('user.id'))
-    owner = db.relationship('User')
-    list_id = db.Column(UUID, db.ForeignKey('item_list.id'))
-    list = db.relationship('List', back_populates='items', uselist=False)
-    activity_id = db.Column(UUID, db.ForeignKey('activity.id'))
-    activity = db.relationship('Activity', back_populates='items', uselist=False)
-    checked_by = db.relationship("User", secondary='checked', uselist=True)
+    id = Column(UUID, primary_key=True)
+    title = Column(String(100))
+    owner_id = Column(UUID, ForeignKey('user.id'))
+    owner = relationship('User')
+    list_id = Column(UUID, ForeignKey('item_list.id'))
+    list = relationship('List', back_populates='items', uselist=False)
+    activity_id = Column(UUID, ForeignKey('activity.id'))
+    activity = relationship('Activity', back_populates='items', uselist=False)
+    checked_by = relationship("User", secondary='checked', uselist=True)
 
 class Checked(db.Model):
     __tablename__ = 'checked'
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(UUID, db.ForeignKey('user.id'))
-    item_id = db.Column(UUID, db.ForeignKey('item.id'))
+    id = Column(Integer, primary_key=True)
+    user_id = Column(UUID, ForeignKey('user.id'))
+    item_id = Column(UUID, ForeignKey('item.id'))
 
 
 if app.config['DROP_DATABASE']:
     db.drop_all()
-if app.config['INIT_DATABASE']
+if app.config['INIT_DATABASE']:
     db.create_all()
