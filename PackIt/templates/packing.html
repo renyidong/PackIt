@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% block more_head %}
+<link rel="stylesheet" href="/static/plugins/iCheck/css/flat/red.css">
+<script src="/static/plugins/iCheck/js/iCheck.min.js"></script>
+{% endblock %}
 {% block body %}
 <div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-footer-fixed ui-page-active" id="choosing-page">
     <div data-role="header" class="jqm-header ui-header" role="banner">
@@ -9,15 +13,46 @@
                     <div class="col-xs-8" style="text-align: center;margin-top: 10px">
                         <span class="h3">Choosing Items</span>
                     </div>
-                    <div class="col-xs-2"><button class="btn btn-link fa fa-plus fa-2x pull-right"></button></div>
+                    <div class="col-xs-2">
+                        <button class="btn btn-link fa fa-plus fa-2x pull-right" data-toggle="modal" data-target="#itemDetail" data-itemname=""></button>
+                    </div>
                 </div>
             </div>
         </nav>
     </div>
 
     <div role="main" class="ui-content jqm-content container-fluid" style="background-color: #ffffff;margin-top: 50px;">
-        <form class="form-horizontal" role="form" id="activity-form">
+        <form ethod="post" action="" class="form-horizontal" role="form" id="itemSelectForm">
             <fieldset>
+                <div class="row form-group category" >
+                    <div class="container-fluid">
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Backpack">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button" data-toggle="modal"
+                                        data-target="#itemDetail" data-itemname="Backpack">
+                                    <span class="fa fa-info-circle"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group category" >
+                    <div class="container-fluid">
+                        <div class="input-group category-item">
+                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                            <input type="text" class="form-control category-item-detail" disabled value="Camera">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default category-item-info" type="button" data-toggle="modal"
+                                        data-target="#itemDetail" data-itemname="Camera">
+                                    <span class="fa fa-info-circle"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
                 {% for item in packingList %}
                 <div class="row form-group category">
                     <div class="container-fluid">
@@ -45,12 +80,12 @@
                                 <h4 class="modal-title" id="itemDetailLabel">Edit Item</h4>
                             </div>
                             <div class="modal-body">
-                                <form>
-                                    <div class="form-group">
+                                <form class="form-horizontal">
+                                    <div class="">
                                         <label for="item-name" class="form-control-label">Item Name:</label>
                                         <input type="text" class="form-control" id="item-name">
                                     </div>
-                                    <div class="form-group">
+                                    <div class="">
                                         <label for="category-name" class="form-control-label">Item Name:</label>
                                         <input type="text" class="form-control" id="category-name">
                                     </div>
@@ -58,7 +93,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Delete</button>
+                                <button type="button" class="btn btn-primary" id="addItemButton">Add</button>
                             </div>
                         </div>
                     </div>
@@ -90,15 +125,13 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                <li><a href="#">Select None</a></li>
-                                <li><a href="#">Select All</a></li>
-                                <li><a href="#">Mark Selected Unpacked</a></li>
-                                <li><a href="#">Mark Selected packed</a></li>
+                                <li><a id="selectNone">Select None</a></li>
+                                <li><a id="selectAll">Select All</a></li>
                             </ul>
                         </div>
                     </div>
                     <div class="col-xs-4">
-                        <button class="btn btn-primary">Pack All</button>
+                        <button class="btn btn-primary" id="packedButtonSubmit">Pack All</button>
                     </div>
                 </div>
             </div>
@@ -108,17 +141,67 @@
 </div>
 
 <script>
-    $('input').iCheck({
-        checkboxClass: 'icheckbox_flat-blue',
-        radioClass: 'iradio_flat-blue'
-    });
-    $('#itemDetail').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var itemName = button.data('itemName') // Extract info from data-* attributes
+    $(document).ready(function(){
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_flat-red',
+            radioClass: 'iradio_flat-red'
+        });
+        $('input').on('ifChecked', function(){
+            $(this).parent().parent().parent().parent().parent().toggleClass("selected");
+        });
+        $('input').on('ifUnchecked', function(){
+            $(this).parent().parent().parent().parent().parent().toggleClass("selected");
+        });
+        $("#selectNone").on('tap',function () {
+            $('input').iCheck('uncheck');
+        });
+        $("#selectAll").on('tap',function () {
+            $('input').iCheck('check');
+        });
+        $('#itemDetail').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var itemName = button.data('itemname') // Extract info from data-* attributes
 
-        var modal = $(this)
-        modal.find('.modal-body #item-name').val(itemName)
-    })
+            var modal = $(this)
+            modal.find('.modal-body #item-name').val(itemName)
+        });
+
+        // add new item event
+        $("#addItemButton").on("tap",function () {
+            var itemName = $("#item-name").val();
+            var categoryName = $("#category-name").val();
+            //alert(itemName);
+            if( itemName != "") {
+                var newItem = '<div class="row form-group category" >';
+                newItem += '<div class="container-fluid">';
+                newItem += '<div class="input-group category-item">';
+                newItem += '<span class="input-group-addon category-item-check"><input type="checkbox"></span>';
+                newItem += '<input type="text" class="form-control category-item-detail" disabled value="' + itemName + '">';
+                newItem += '<span class="input-group-btn">';
+                newItem += '<button class="btn btn-default category-item-info" type="button" data-toggle="modal" data-target="#itemDetail" data-itemname="' + itemName + '">';
+                newItem += '<span class="fa fa-info-circle"></span></button></span></div></div></div>';
+                $("#itemSelectForm fieldset").append(newItem);
+                $('input').iCheck({
+                    checkboxClass: 'icheckbox_flat-red',
+                    radioClass: 'iradio_flat-red'
+                });
+                $('input').on('ifChecked', function(){
+                    $(this).parent().parent().parent().parent().parent().toggleClass("selected");
+                });
+                $('input').on('ifUnchecked', function(){
+                    $(this).parent().parent().parent().parent().parent().toggleClass("selected");
+                });
+                $('#itemDetail').modal('hide')
+            }
+        });
+
+
+        $("#packedButtonSubmit").on("tap", function () {
+            window.location.href = "{{ url_for('packed_to_check') }}";
+        });
+    });
+
+
 </script>
 
 

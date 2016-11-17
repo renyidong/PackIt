@@ -899,3 +899,15 @@ li[class*="col-"] > .square-responsive{
     color: #fff;
     text-shadow: none;
 }
+
+/*displaying items*/
+.category.form-group{
+    margin-bottom: 0px;
+}
+.jqm-demos .jqm-content .category.selected .container-fluid,
+.jqm-demos .jqm-content .category.selected .category-item,
+.jqm-demos .jqm-content .category.selected .category-item .category-item-check,
+.jqm-demos .jqm-content .category.selected .category-item .category-item-detail,
+.jqm-demos .jqm-content .category.selected .category-item .category-item-info{
+    background-color: #00aeef;
+}

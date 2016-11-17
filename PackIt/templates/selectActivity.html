@@ -6,7 +6,6 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a href="newEvent.html" class="fa fa-chevron-left fa-2x pull-left" style="margin: 10px;"></a>
                     <h3 class="ui-header" role="heading">Select Activity</h3>
                 </div>
             </div>
@@ -203,6 +202,10 @@
                 $(this).find("input").attr('checked','checked');
             }
 
+        });
+
+        $("#beginPackingSubmit").on("tap", function () {
+            window.location.href = "{{ url_for('packing_list') }}";
         });
     });
 </script>

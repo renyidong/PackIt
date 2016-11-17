@@ -9,4 +9,5 @@ from . import main
 from . import user
 from . import event
 from . import packing_list
+from . import packed_to_check
 
