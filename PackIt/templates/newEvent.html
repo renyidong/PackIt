@@ -6,18 +6,18 @@
         <h2 class="ui-header" role="heading">Pack IT</h2>
     </div>
     <div data-role="main" class="ui-content jqm-content" style="background-color: #00ffff">
-        <form method="post" action="" class="form-horizontal form-inline" role="form">
+        <form method="post" class="form-horizontal form-inline" role="form">
             <fieldset>
                 <div class="form-group" style="text-align: center">
                     <h4>New Event</h4>
                 </div>
                 <!--Destination-->
                 <div class="form-group">
-                    <input type="text" placeholder="Input your destination" class="input-xlarge form-control">
+                    <input id="destination" name="destination" type="text" placeholder="Input your destination" class="input-xlarge form-control">
                 </div>
                 <div class="form-group row">
                     <div class="controls">
-                        <input id="datetimepicker" class="span2 form-control" data-date-format="mm-dd-yyyy" size="16" type="text" value="11-02-2016" >
+                        <input id="datetimepicker" name="departureDate" class="span2 form-control" data-date-format="mm-dd-yyyy" size="16" type="text" value="11-02-2016" >
                         <span class="add-on"><i class="icon-th"></i></span>
                     </div>
                     <label class="control-label">
@@ -25,12 +25,12 @@
                         <span id="currentStayLength">5</span>
                     </label>
                     <div style="padding-left: 0px;margin-right: 0px;">
-                        <input id="lengthOfStay" class="col-xs-6" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="5"/>
+                        <input id="lengthOfStay" name="lengthOfStay" class="col-xs-6" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="5"/>
                     </div>
                 </div>
                 <div class="form-group" >
                     <div class="controls">
-                        <select class="input-xlarge form-control">
+                        <select name="luggageSize" class="input-xlarge form-control">
                             <option>Select Luggage Size</option>
                             <option>Backpack</option>
                             <option>Small</option>
@@ -43,7 +43,7 @@
                     <label class="col-xs-5 control-label">Display Quantity</label>
                     <div class="col-xs-7 controls" style="text-align: right">
                         <div class="switch" tabindex="0">
-                            <input id="displayQuantity" type="checkbox" />
+                            <input id="displayQuantity" name="displayQuantity" type="checkbox" />
                         </div>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                     <label class="col-xs-5 control-label">Reminder</label>
                     <div class="col-xs-7 controls" style="text-align: right">
                         <div class="switch" tabindex="0">
-                            <input id="remindMe" type="checkbox" />
+                            <input id="remindMe" name="remindMe" type="checkbox" />
                         </div>
                     </div>
 
@@ -60,7 +60,7 @@
 
                 <div id="remindTimeSelectPanel" class="form-group" style="display: none; background-color: #ffffff;margin-bottom: 1px;">
                     <div class="controls">
-                        <input id="remindTimePicker" class="span2 form-control" data-date-format="mm-dd-yyyy hh:ii" size="16" type="text" value="" placeholder="Select Remind Time" >
+                        <input id="remindTimePicker" name="remindTimePicker" class="span2 form-control" data-date-format="mm-dd-yyyy hh:ii" size="16" type="text" value="" placeholder="Select Remind Time" >
                         <span class="add-on"><i class="icon-th"></i></span>
                     </div>
                 </div>
@@ -102,9 +102,6 @@
             }else{
                 $('#remindTimeSelectPanel').css('display','none');
             }
-        });
-        $("#selectActivitySubmit").on("tap", function(){
-           window.location.href = "{{ url_for('set_activity') }}";
         });
 
         $("#remindPlus").on("tap", function () {
