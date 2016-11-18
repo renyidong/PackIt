@@ -2,6 +2,7 @@ from . import app
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.types import TypeDecorator, CHAR
 import uuid
+import datetime
 
 db = SQLAlchemy(app)
 Column = db.Column
@@ -43,11 +44,11 @@ class Event(db.Model):
     id = Column(UUID, primary_key=True)
     title = Column(String(100))
     destination = Column(String(100))
-    eventtype = Integer()
-    begin = DateTime(timezone=True)
-    end = DateTime(timezone=True)
-    remind_at = DateTime(timezone=True)
-    capacity = Integer()
+    eventtype = Column(Integer())
+    begin = Column(DateTime(timezone=True))
+    end = Column(DateTime(timezone=True))
+    remind_at = Column(DateTime(timezone=True))
+    capacity = Column(Integer())
     owner_id = Column(UUID, ForeignKey('user.id'))
     owner = relationship('User', back_populates='events', uselist=False)
     activities = relationship('Activity', back_populates='event', uselist=True)
@@ -95,3 +96,45 @@ if app.config['DROP_DATABASE']:
     db.drop_all()
 if app.config['INIT_DATABASE']:
     db.create_all()
+
+@app.cli.command()
+def inject_test_data():
+    user = User.query.get('urn:uuid:12345678-1234-5678-1234-567812345678')
+    if user: 
+        db.session.delete(user)
+        db.session.commit()
+    user = User()
+    user.id = 'urn:uuid:12345678-1234-5678-1234-567812345678'
+    user.email = 'test@example.com'
+    user.password = 'password'
+    db.session.add(user)
+    
+    for e in range(2):
+        event = Event()
+        event.id = uuid.uuid4()
+        event.title = 'Test Event %s'%event.id
+        event.destination = 'Test location %s'%event.id
+        event.eventtype = 42
+        event.begin = datetime.datetime.now() + datetime.timedelta(1)
+        event.end = datetime.datetime.now() + datetime.timedelta(3)
+        event.remind_at = datetime.datetime.now() + datetime.timedelta(2)
+        event.capacity = 1
+        event.owner_id = user.id
+        db.session.add(event)
+        
+        for l in range(2):
+            item_list = ItemList()
+            item_list.id = uuid.uuid4()
+            item_list.title = "Test list %s"%item_list.id
+            item_list.event_id = event.id
+            item_list.owner_id = user.id
+            db.session.add(item_list)
+    
+            for i in range(5):
+                item = Item()
+                item.id = uuid.uuid4()
+                item.title = 'Test item %s'%item.id
+                item.owner_id = user.id
+                item.list_id = item_list.id
+                db.session.add(item)
+    db.session.commit()

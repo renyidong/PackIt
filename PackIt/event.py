@@ -1,7 +1,6 @@
 from flask import request, render_template, redirect, url_for
 
 from . import app
-from .packing_list import packing_list
 from .database import Event, ItemList, db
 import uuid
 from datetime import datetime,timedelta

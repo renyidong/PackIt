@@ -58,10 +58,10 @@
                     <div class="container-fluid">
                         <div class="input-group category-item">
                             <span class="input-group-addon category-item-check"><input type="checkbox"></span>
-                            <input type="text" class="form-control category-item-detail" disabled value="{{ item.name }}">
+                            <input type="text" class="form-control category-item-detail" disabled value="{{ item['name'] }}">
                             <span class="input-group-btn">
                                 <button class="btn btn-default category-item-info" type="button" data-toggle="modal"
-                                        data-target="#itemDetail" data-itemName="{{ item.name }}">
+                                        data-target="#itemDetail" data-itemName="{{ item['name'] }}">
                                     <span class="fa fa-info-circle"></span>
                                 </button>
                             </span>
@@ -131,7 +131,7 @@
                         </div>
                     </div>
                     <div class="col-xs-4">
-                        <button class="btn btn-primary" id="packedButtonSubmit">Pack All</button>
+                        <button type="submit" class="btn btn-primary" id="packedButtonSubmit">Pack All</button>
                     </div>
                 </div>
             </div>

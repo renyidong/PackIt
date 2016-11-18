@@ -68,8 +68,9 @@
         <div class="row form-group list-group">
             <div class="container-fluid">
                 <div class="col-xs-10 list-infor" data-toggle="modal" data-target="#modifyPackingListPop">
-                    <div><span>{{ oneList.name }}</span></div>
-                    <div><span>{{ oneList.remindTime }}</span></div>
+                    <!-- Redirect to url_for('packing_list', list_id=oneList['id']) -->
+                    <div><span>{{ oneList['name'] }}</span></div>
+                    <div><span>{{ oneList['remindTime'] }}</span></div>
                 </div>
                 <div class="col-xs-2">
                     <span><i class="fa fa-check" style="display: none"></i></span>
