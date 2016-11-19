@@ -133,43 +133,45 @@
         </nav>
     </div>
 
+    <script>
+        $(document).ready(function(){
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_flat-red',
+                radioClass: 'iradio_flat-red'
+            });
+            $('input').on('ifChecked', function(){
+                $(this).parent().parent().parent().parent().parent().toggleClass("selected");
+                var packed = $(this).parent().parent().parent().parent().parent();
+                $(".checked-already").append(packed);
+            });
+            $('input').on('ifUnchecked', function(){
+                $(this).parent().parent().parent().parent().parent().toggleClass("selected");
+                var packed = $(this).parent().parent().parent().parent().parent();
+                $(".to-check").append(packed);
+            });
+            $("#selectNone").on('tap',function () {
+                $('input').iCheck('uncheck');
+            });
+            $("#selectAll").on('tap',function () {
+                $('input').iCheck('check');
+            });
+            $('#itemDetail').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var itemName = button.data('itemname') // Extract info from data-* attributes
+
+                var modal = $(this)
+                modal.find('.modal-body #item-name').val(itemName)
+            });
+
+
+        });
+
+
+    </script>
+
 </div>
 
-<script>
-    $(document).ready(function(){
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_flat-red',
-            radioClass: 'iradio_flat-red'
-        });
-        $('input').on('ifChecked', function(){
-            $(this).parent().parent().parent().parent().parent().toggleClass("selected");
-            var packed = $(this).parent().parent().parent().parent().parent();
-            $(".checked-already").append(packed);
-        });
-        $('input').on('ifUnchecked', function(){
-            $(this).parent().parent().parent().parent().parent().toggleClass("selected");
-            var packed = $(this).parent().parent().parent().parent().parent();
-            $(".to-check").append(packed);
-        });
-        $("#selectNone").on('tap',function () {
-            $('input').iCheck('uncheck');
-        });
-        $("#selectAll").on('tap',function () {
-            $('input').iCheck('check');
-        });
-        $('#itemDetail').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget) // Button that triggered the modal
-            var itemName = button.data('itemname') // Extract info from data-* attributes
 
-            var modal = $(this)
-            modal.find('.modal-body #item-name').val(itemName)
-        });
-
-
-    });
-
-
-</script>
 
 
 {% endblock %}
