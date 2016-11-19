@@ -11,9 +11,14 @@ relationship = db.relationship
 String = db.String
 DateTime = db.DateTime
 Integer = db.Integer
+Boolean = db.Boolean
 
 class UUID(TypeDecorator):
     impl = CHAR
+    
+    @classmethod
+    def new_random(cls):
+        return uuid.uuid4()
 
     def process_bind_param(self, value, dialect):
         if value is None:
@@ -33,10 +38,35 @@ class UUID(TypeDecorator):
 
 class User(db.Model):
     __tablename__ = 'user'
+    
+    @classmethod
+    def new(cls, username, email, password):
+        u = cls()
+        u.id = uuid.uuid4()
+        u.username = username
+        u.email = email
+        u.password = password
+        u.is_active = True
+        return u
+    
     id = Column(UUID, primary_key=True)
+    username = Column(String(100), unique=True)
     email = Column(String(100), unique=True)
     password = Column(String(100))
     events = relationship('Event', back_populates='owner', uselist=True)
+    is_active = Column(Boolean)
+    
+    @property
+    def is_authenticated(self):
+        return True
+        
+    @property
+    def is_anonymous(self):
+        return False
+    
+    def get_id(self):
+        return self.id
+
 
 
 class Event(db.Model):
@@ -99,14 +129,10 @@ if app.config['INIT_DATABASE']:
 
 @app.cli.command()
 def inject_test_data():
-    user = User.query.get('urn:uuid:12345678-1234-5678-1234-567812345678')
-    if user: 
-        db.session.delete(user)
-        db.session.commit()
-    user = User()
+    db.drop_all()
+    db.create_all()
+    user = User.new('test_user', 'test@example.com', 'password')
     user.id = 'urn:uuid:12345678-1234-5678-1234-567812345678'
-    user.email = 'test@example.com'
-    user.password = 'password'
     db.session.add(user)
     
     for e in range(2):

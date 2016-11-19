@@ -1,56 +1,57 @@
 from flask import request, session, render_template, abort, redirect, flash, url_for
+import flask_login
 
 from . import app
+from .database import db, User
 
-def get_login():
-    return session.get('uid', None)
 
-def require_login(f):
-    def wrapped(*args, **kwargs):
-        if get_login():
-            return f(*args, **kwargs)
-        else:
-            return redirect(url_for('login'), code=302)
-    return wrapped
+login_manager = flask_login.LoginManager(app)
 
-@app.route('/user/signup')
-def signup():
-    return render_template('signup.html')
-    
-@app.route('/user/signup', methods=['POST'])
-def do_signup():
-    if True:
-        flash('You are signed up!')
-        return redirect(url_for('login'), code=303)
-    else:
-        flash('Error of signup')
-        return redirect(url_for('signup'), code=303)
 
-@app.route('/login')
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
+@app.route('/login', methods=['GET'])
 def login():
     return render_template('index.html')
 
 @app.route('/login', methods=['POST'])
 def do_login():
-    if get_login():
-        return redirect(url_for('main'), code=303)
     username = request.form['username']
     password = request.form['password']
-    if username=='foo' and password=='bar':
-        session['uid'] = 123
+    print(username, password)
+    user = User.query.filter_by(username=username).first()
+    
+    if user and user.password == password:
+        flask_login.login_user(user)
         flash('You are logged in.')
-        return redirect(url_for('home'), code=303)
+        next = request.args.get('next')
+        return redirect(next or url_for('home'))
     else:
-        flash('Error of login')
-        return redirect(url_for('login'), code=303)
+        flash("Wrong username or password.")
+        return redirect(url_for('login'))
 
-        
-        
-@app.route('/user/logout')
-@require_login  
+
+@app.route('/logout')
+@flask_login.login_required  
 def logout():
-    if 'uid' in session:
-        del(session['uid'])
+    flask_login.logout_user()
     flash('You are logged out.')
-    return redirect(url_for('login'), code=303)
+    next = request.args.get('next')
+    return redirect(next or url_for('home'))
 
+@app.route('/signup')
+def signup():
+    return render_template('signup.html')
+    
+@app.route('/signup', methods=['POST'])
+def do_signup():
+    username = request.args['username']
+    email = request.args['email']
+    password = request.args['password']
+    
+    user = User.new(username, email, password)
+    db.session.add(user)
+    flash('You are signed up!')
+    return redirect(url_for('login'))

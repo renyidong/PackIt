@@ -1,10 +1,12 @@
-from flask import request, render_template, send_from_directory
+from flask import request, render_template, send_from_directory, flash
 
 from . import app
 from .database import ItemList
+from .user import login_manager
 
 @app.route("/")
 def home():
+    flash("HEll")
     uid = 'urn:uuid:12345678-1234-5678-1234-567812345678'
     packingListSet = []
     for lst in ItemList.query.filter_by(owner_id=uid):
