@@ -28,7 +28,7 @@
                     <div class="container-fluid">
                         <div class="input-group category-item">
                             <span class="input-group-addon category-item-check"><input type="checkbox"></span>
-                            <input type="text" class="form-control category-item-detail" disabled value="Backpack">
+                            <input name="itemName" type="text" class="form-control category-item-detail" disabled value="Backpack">
                             <span class="input-group-btn">
                                 <button class="btn btn-default category-item-info" type="button" data-toggle="modal"
                                         data-target="#itemDetail" data-itemname="Backpack">
@@ -42,7 +42,7 @@
                     <div class="container-fluid">
                         <div class="input-group category-item">
                             <span class="input-group-addon category-item-check"><input type="checkbox"></span>
-                            <input type="text" class="form-control category-item-detail" disabled value="Camera">
+                            <input name="itemName" type="text" class="form-control category-item-detail" disabled value="Camera">
                             <span class="input-group-btn">
                                 <button class="btn btn-default category-item-info" type="button" data-toggle="modal"
                                         data-target="#itemDetail" data-itemname="Camera">
@@ -138,66 +138,73 @@
         </nav>
     </div>
 
+    <script>
+        $(document).ready(function(){
+            $('input').iCheck({
+                checkboxClass: 'icheckbox_flat-red',
+                radioClass: 'iradio_flat-red'
+            });
+            $('input').on('ifChecked', function(){
+                $(this).parent().parent().parent().parent().parent().toggleClass("selected");
+            });
+            $('input').on('ifUnchecked', function(){
+                $(this).parent().parent().parent().parent().parent().toggleClass("selected");
+            });
+            $("#selectNone").on('tap',function () {
+                $('input').iCheck('uncheck');
+            });
+            $("#selectAll").on('tap',function () {
+                $('input').iCheck('check');
+            });
+            $('#itemDetail').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget) // Button that triggered the modal
+                var itemName = button.data('itemname') // Extract info from data-* attributes
+
+                var modal = $(this)
+                modal.find('.modal-body #item-name').val(itemName)
+            });
+
+            // add new item event
+            $("#addItemButton").on("tap",function () {
+                var itemName = $("#item-name").val();
+                var categoryName = $("#category-name").val();
+                //alert(itemName);
+                if( itemName != "") {
+                    var newItem = '<div class="row form-group category" >';
+                    newItem += '<div class="container-fluid">';
+                    newItem += '<div class="input-group category-item">';
+                    newItem += '<span class="input-group-addon category-item-check"><input type="checkbox"></span>';
+                    newItem += '<input type="text" class="form-control category-item-detail" disabled value="' + itemName + '">';
+                    newItem += '<span class="input-group-btn">';
+                    newItem += '<button class="btn btn-default category-item-info" type="button" data-toggle="modal" data-target="#itemDetail" data-itemname="' + itemName + '">';
+                    newItem += '<span class="fa fa-info-circle"></span></button></span></div></div></div>';
+                    $("#itemSelectForm fieldset").append(newItem);
+                    $('input').iCheck({
+                        checkboxClass: 'icheckbox_flat-red',
+                        radioClass: 'iradio_flat-red'
+                    });
+                    $('input').on('ifChecked', function(){
+                        $(this).parent().parent().parent().parent().parent().toggleClass("selected");
+                    });
+                    $('input').on('ifUnchecked', function(){
+                        $(this).parent().parent().parent().parent().parent().toggleClass("selected");
+                    });
+                    $('#itemDetail').modal('hide')
+                }
+            });
+
+
+            $("#packedButtonSubmit").on("tap", function () {
+                //$("#choosing-page").css("display","none");
+                //$("#packed-page").css("display","block");
+            });
+        });
+
+    </script>
+
 </div>
 
-<script>
-    $(document).ready(function(){
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_flat-red',
-            radioClass: 'iradio_flat-red'
-        });
-        $('input').on('ifChecked', function(){
-            $(this).parent().parent().parent().parent().parent().toggleClass("selected");
-        });
-        $('input').on('ifUnchecked', function(){
-            $(this).parent().parent().parent().parent().parent().toggleClass("selected");
-        });
-        $("#selectNone").on('tap',function () {
-            $('input').iCheck('uncheck');
-        });
-        $("#selectAll").on('tap',function () {
-            $('input').iCheck('check');
-        });
-        $('#itemDetail').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget) // Button that triggered the modal
-            var itemName = button.data('itemname') // Extract info from data-* attributes
 
-            var modal = $(this)
-            modal.find('.modal-body #item-name').val(itemName)
-        });
-
-        // add new item event
-        $("#addItemButton").on("tap",function () {
-            var itemName = $("#item-name").val();
-            var categoryName = $("#category-name").val();
-            //alert(itemName);
-            if( itemName != "") {
-                var newItem = '<div class="row form-group category" >';
-                newItem += '<div class="container-fluid">';
-                newItem += '<div class="input-group category-item">';
-                newItem += '<span class="input-group-addon category-item-check"><input type="checkbox"></span>';
-                newItem += '<input type="text" class="form-control category-item-detail" disabled value="' + itemName + '">';
-                newItem += '<span class="input-group-btn">';
-                newItem += '<button class="btn btn-default category-item-info" type="button" data-toggle="modal" data-target="#itemDetail" data-itemname="' + itemName + '">';
-                newItem += '<span class="fa fa-info-circle"></span></button></span></div></div></div>';
-                $("#itemSelectForm fieldset").append(newItem);
-                $('input').iCheck({
-                    checkboxClass: 'icheckbox_flat-red',
-                    radioClass: 'iradio_flat-red'
-                });
-                $('input').on('ifChecked', function(){
-                    $(this).parent().parent().parent().parent().parent().toggleClass("selected");
-                });
-                $('input').on('ifUnchecked', function(){
-                    $(this).parent().parent().parent().parent().parent().toggleClass("selected");
-                });
-                $('#itemDetail').modal('hide')
-            }
-        });
-    });
-
-
-</script>
 
 
 {% endblock %}
