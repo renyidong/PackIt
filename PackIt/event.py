@@ -16,6 +16,7 @@ def new_event():
 def post_new_event():
     e = Event()
     e.id = uuid.uuid4()
+    e.title = request.form['eventName']
     e.destination = request.form['destination']
     e.begin = datetime.strptime(request.form['departureDate'], '%m-%d-%Y')
     e.end = e.begin + timedelta(days=int(request.form['lengthOfStay']))

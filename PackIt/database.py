@@ -14,7 +14,7 @@ Integer = db.Integer
 Boolean = db.Boolean
 
 class UUID(TypeDecorator):
-    impl = CHAR
+    impl = CHAR(32)
     
     @classmethod
     def new_random(cls):
@@ -25,9 +25,9 @@ class UUID(TypeDecorator):
             return value
         else:
             if not isinstance(value, uuid.UUID):
-                return uuid.UUID(value).urn
+                return uuid.UUID(value).hex
             else:
-                return value.urn
+                return value.hex
 
     def process_result_value(self, value, dialect):
         if value is None:
@@ -42,7 +42,7 @@ class User(db.Model):
     @classmethod
     def new(cls, username, email, password):
         u = cls()
-        u.id = uuid.uuid4()
+        u.id = UUID.new_random()
         u.username = username
         u.email = email
         u.password = password
@@ -81,16 +81,16 @@ class Event(db.Model):
     capacity = Column(Integer())
     owner_id = Column(UUID, ForeignKey('user.id'))
     owner = relationship('User', back_populates='events', uselist=False)
-    activities = relationship('Activity', back_populates='event', uselist=True)
+    # activities = relationship('Activity', back_populates='event', uselist=True)
     lists = relationship('ItemList', back_populates='event', uselist=True)
 
-class Activity(db.Model):
-    __tablename__ = 'activity'
-    id = Column(UUID, primary_key=True)
-    title = Column(String(100))
-    event_id = Column(UUID, ForeignKey('event.id')) 
-    event = relationship('Event', back_populates='activities', uselist=False)
-    items = relationship('Item', back_populates='activity', uselist=True)
+# class Activity(db.Model):
+#     __tablename__ = 'activity'
+#     id = Column(UUID, primary_key=True)
+#     title = Column(String(100))
+#     event_id = Column(UUID, ForeignKey('event.id')) 
+#     event = relationship('Event', back_populates='activities', uselist=False)
+#     items = relationship('Item', back_populates='activity', uselist=True)
     
 class ItemList(db.Model):
     __tablename__ = 'item_list'
@@ -107,13 +107,25 @@ class Item(db.Model):
     __tablename__ = 'item'
     id = Column(UUID, primary_key=True)
     title = Column(String(100))
+    public = Column(Boolean)
     owner_id = Column(UUID, ForeignKey('user.id'))
     owner = relationship('User')
     list_id = Column(UUID, ForeignKey('item_list.id'))
     list = relationship('ItemList', back_populates='items', uselist=False)
-    activity_id = Column(UUID, ForeignKey('activity.id'))
-    activity = relationship('Activity', back_populates='items', uselist=False)
+    #activity_id = Column(UUID, ForeignKey('activity.id'))
+    #activity = relationship('Activity', back_populates='items', uselist=False)
     checked_by = relationship("User", secondary='checked', uselist=True)
+    
+    @classmethod
+    def new(cls, title, owner_id, list_id, activity_id=None, public=False):
+        i = cls()
+        i.id = UUID.new_random()
+        i.title = title
+        i.owner_id = owner_id
+        i.list_id = list_id
+        #i.activity_id = activity_id
+        i.public = public
+        return i
 
 class Checked(db.Model):
     __tablename__ = 'checked'
@@ -121,11 +133,6 @@ class Checked(db.Model):
     user_id = Column(UUID, ForeignKey('user.id'))
     item_id = Column(UUID, ForeignKey('item.id'))
 
-
-if app.config['DROP_DATABASE']:
-    db.drop_all()
-if app.config['INIT_DATABASE']:
-    db.create_all()
 
 @app.cli.command()
 def inject_test_data():
@@ -137,7 +144,7 @@ def inject_test_data():
     
     for e in range(2):
         event = Event()
-        event.id = uuid.uuid4()
+        event.id = UUID.new_random()
         event.title = 'Test Event %s'%event.id
         event.destination = 'Test location %s'%event.id
         event.eventtype = 42
@@ -148,19 +155,15 @@ def inject_test_data():
         event.owner_id = user.id
         db.session.add(event)
         
-        for l in range(2):
-            item_list = ItemList()
-            item_list.id = uuid.uuid4()
-            item_list.title = "Test list %s"%item_list.id
-            item_list.event_id = event.id
-            item_list.owner_id = user.id
-            db.session.add(item_list)
+        item_list = ItemList()
+        item_list.id = UUID.new_random()
+        item_list.title = "Test list %s"%item_list.id
+        item_list.event_id = event.id
+        item_list.owner_id = user.id
+        db.session.add(item_list)
     
-            for i in range(5):
-                item = Item()
-                item.id = uuid.uuid4()
-                item.title = 'Test item %s'%item.id
-                item.owner_id = user.id
-                item.list_id = item_list.id
-                db.session.add(item)
+        for i in range(5):
+            item = Item.new('Test item %i'%i,
+                            user.id, item_list.id,public=False)
+            db.session.add(item)
     db.session.commit()
