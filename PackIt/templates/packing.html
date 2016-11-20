@@ -2,34 +2,7 @@
 {% block more_head %}
 <link rel="stylesheet" href="/static/plugins/iCheck/css/flat/red.css">
 <script src="/static/plugins/iCheck/js/icheck.min.js"></script>
-<style>
-    .behind {
-        /*width: 100%;*/
-        /*height: 100%;*/
-        /*position: absolute;*/
-        /*top: 0;*/
-        /*right: 0;*/
-    }
-    .behind a.ui-btn {
-        width: 68px;
-        margin: 0px;
-        float: right;
-        border: none;
-    }
-    .behind a.delete-btn, .behind a.delete-btn:active, .behind a.delete-btn:visited, .behind a.delete-btn:focus, .behind a.delete-btn:hover {
-        color: white;
-        background-color: red;
-        text-shadow: none;
-    }
-    .behind a.ui-btn.pull-left {
-        float: left;
-    }
-    .behind a.edit-btn, .behind a.edit-btn:active, .behind a.edit-btn:visited, .behind a.edit-btn:focus, .behind a.edit-btn:hover {
-        color: white;
-        background-color: orange;
-        text-shadow: none;
-    }
-</style>
+<script src="/static/js/demo.js"></script>
 {% endblock %}
 {% block body %}
 <div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-footer-fixed ui-page-active" id="choosing-page">
@@ -49,44 +22,63 @@
         </nav>
     </div>
 
-    <div role="main" class="ui-content jqm-content container-fluid" style="background-color: #ffffff;margin-top: 50px;">
+    <div role="main" class="ui-content jqm-content" style="background-color: #ffffff;margin-top: 50px; padding: 0;">
         <form method="post" class="form-horizontal" role="form" id="itemSelectForm">
             <fieldset>
-                <div class="row form-group category" >
-                    <div class="container-fluid">
+                <ul class="list-group category-list">
+                    <li class="list-group-item">
                         <div class="behind">
                             <a href="#" class="ui-btn delete-btn">Delete</a>
                             <a href="#" class="ui-btn edit-btn pull-left">Edit</a>
                         </div>
-                        <div class="input-group category-item">
-                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
-                            <input name="itemName" type="text" class="form-control category-item-detail" disabled value="Backpack">
-                            <span class="input-group-btn">
+                        <div class="row form-group category" >
+                            <div class="container-fluid">
+                                <div class="input-group category-item">
+                                    <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                                    <input name="itemName" type="text" class="form-control category-item-detail" disabled value="Backpack">
+                                    <span class="input-group-btn">
                                     <button class="btn btn-default category-item-info" type="button" data-toggle="modal"
                                             data-target="#itemDetail" data-itemname="Backpack">
                                         <span class="fa fa-info-circle"></span>
                                     </button>
                                 </span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row form-group category" >
-                    <div class="container-fluid">
-                        <div class="input-group category-item">
-                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
-                            <input name="itemName" type="text" class="form-control category-item-detail" disabled value="Camera">
-                            <span class="input-group-btn">
+                    </li>
+                    <li class="list-group-item">
+                        <div class="behind">
+                            <a href="#" class="ui-btn delete-btn">Delete</a>
+                            <a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal"
+                               data-target="#itemDetail" data-itemname="Camera">Edit</a>
+                        </div>
+                        <div class="row form-group category" >
+                            <div class="container-fluid">
+                                <div class="input-group category-item">
+                                    <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                                    <input name="itemName" type="text" class="form-control category-item-detail" disabled value="Camera">
+                                    <span class="input-group-btn">
                                     <button class="btn btn-default category-item-info" type="button" data-toggle="modal"
                                             data-target="#itemDetail" data-itemname="Camera">
                                         <span class="fa fa-info-circle"></span>
                                     </button>
                                 </span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                </ul>
+
+
 
                 {% for item in packingList %}
-                <div class="row form-group category">
+                <li class="list-group-item">
+                    <div class="behind">
+                        <a href="#" class="ui-btn delete-btn">Delete</a>
+                        <a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal"
+                           data-target="#itemDetail" data-itemName="{{ item['name'] }}">Edit</a>
+                    </div>
+                    <div class="row form-group category">
                     <div class="container-fluid">
                         <div class="input-group category-item">
                             <span class="input-group-addon category-item-check"><input type="checkbox"></span>
@@ -100,6 +92,7 @@
                         </div>
                     </div>
                 </div>
+                </li>
                 {% endfor %}
 
                 <div class="modal fade" id="itemDetail" tabindex="-1" role="dialog" aria-labelledby="itemDetailLabel" aria-hidden="true">
@@ -202,7 +195,11 @@
                 var categoryName = $("#category-name").val();
                 //alert(itemName);
                 if( itemName != "") {
-                    var newItem = '<div class="row form-group category" >';
+                    var newItem = '<li class="list-group-item">';
+                    newItem += '<div class="behind"><a href="#" class="ui-btn delete-btn">Delete</a>';
+                    newItem += '<a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal" data-target="#itemDetail" data-itemName="' + itemName + '">Edit</a>';
+                    newItem += '</div>';
+                    newItem += '<div class="row form-group category" >';
                     newItem += '<div class="container-fluid">';
                     newItem += '<div class="input-group category-item">';
                     newItem += '<span class="input-group-addon category-item-check"><input type="checkbox"></span>';
@@ -210,7 +207,7 @@
                     newItem += '<span class="input-group-btn">';
                     newItem += '<button class="btn btn-default category-item-info" type="button" data-toggle="modal" data-target="#itemDetail" data-itemname="' + itemName + '">';
                     newItem += '<span class="fa fa-info-circle"></span></button></span></div></div></div>';
-                    $("#itemSelectForm fieldset").append(newItem);
+                    $("#itemSelectForm fieldset ul").append(newItem);
                     $('input').iCheck({
                         checkboxClass: 'icheckbox_flat-red',
                         radioClass: 'iradio_flat-red'
@@ -221,53 +218,63 @@
                     $('input').on('ifUnchecked', function(){
                         $(this).parent().parent().parent().parent().parent().toggleClass("selected");
                     });
+
+                    function prevent_default(e) {
+                        e.preventDefault();
+                    }
+                    function disable_scroll() {
+                        $(document).on('touchmove', prevent_default);
+                    }
+                    function enable_scroll() {
+                        $(document).unbind('touchmove', prevent_default)
+                    }
+                    var x;
+                    $('.category-item')
+                            .on('touchstart', function(e) {
+                                console.log(e.originalEvent.pageX)
+                                $('.category-item.open').css('left', '0px').removeClass('open') // close em all
+                                $(e.currentTarget).addClass('open')
+                                x = e.originalEvent.targetTouches[0].pageX // anchor point
+                            })
+                            .on('touchmove', function(e) {
+                                var change = e.originalEvent.targetTouches[0].pageX - x
+                                change = Math.min(Math.max(-100, change), 100) // restrict to -100px left, 0px right
+                                e.currentTarget.style.left = change + 'px'
+                                if (change < -10) disable_scroll() // disable scroll once we hit 10px horizontal slide
+                            })
+                            .on('touchend', function(e) {
+                                var left = parseInt(e.currentTarget.style.left)
+                                var new_left;
+                                if (left < -35) {
+                                    new_left = '-100px'
+                                } else if (left > 35) {
+                                    new_left = '100px'
+                                } else {
+                                    new_left = '0px'
+                                }
+                                // e.currentTarget.style.left = new_left
+                                $(e.currentTarget).animate({left: new_left}, 200)
+                                enable_scroll()
+                            });
+                    $("li .delete-btn").on("touchend", function (e) {
+                        e.preventDefault()
+                        $(this).parents('li').slideUp('fast', function() {
+                            $(this).remove()
+                        })
+                    });
+                    $("#packedButtonSubmit").on("tap", function () {
+                        $("#choosing-page").toggleClass("ui-page-active");
+                        $("#packed-page").toggleClass("ui-page-active");
+                    });
+
                     $('#itemDetail').modal('hide')
                 }
             });
 
 
-            $("#packedButtonSubmit").on("tap", function () {
-                $("#choosing-page").toggleClass("ui-page-active");
-                $("#packed-page").toggleClass("ui-page-active");
-            });
 
-            function prevent_default(e) {
-                e.preventDefault();
-            }
-            function disable_scroll() {
-                $(document).on('touchmove', prevent_default);
-            }
-            function enable_scroll() {
-                $(document).unbind('touchmove', prevent_default)
-            }
-            var x;
-            $('.category-item')
-                    .on('touchstart', function(e) {
-                        console.log(e.originalEvent.pageX)
-                        $('.category-item.open').css('left', '0px').removeClass('open') // close em all
-                        $(e.currentTarget).addClass('open')
-                        x = e.originalEvent.targetTouches[0].pageX // anchor point
-                    })
-                    .on('touchmove', function(e) {
-                        var change = e.originalEvent.targetTouches[0].pageX - x
-                        change = Math.min(Math.max(-100, change), 100) // restrict to -100px left, 0px right
-                        e.currentTarget.style.left = change + 'px'
-                        if (change < -10) disable_scroll() // disable scroll once we hit 10px horizontal slide
-                    })
-                    .on('touchend', function(e) {
-                        var left = parseInt(e.currentTarget.style.left)
-                        var new_left;
-                        if (left < -35) {
-                            new_left = '-100px'
-                        } else if (left > 35) {
-                            new_left = '100px'
-                        } else {
-                            new_left = '0px'
-                        }
-                        // e.currentTarget.style.left = new_left
-                        $(e.currentTarget).animate({left: new_left}, 200)
-                        enable_scroll()
-                    });
+
+
         });
 
     </script>
@@ -293,37 +300,46 @@
         </nav>
     </div>
 
-    <div role="main" class="ui-content jqm-content container-fluid" style="background-color: #ffffff;margin-top: 50px;">
-        <form class="form-horizontal" role="form" id="itemSelectForm">
+    <div role="main" class="ui-content jqm-content" style="background-color: #ffffff;margin-top: 50px;padding: 0;">
+        <form class="form-horizontal" role="form" id="itemPackedForm">
             <fieldset>
                 <div class="to-check">
-                    <div class="row form-group category" >
-                        <div class="container-fluid">
-                            <div class="input-group category-item">
-                                <span class="input-group-addon category-item-check"><input type="checkbox"></span>
-                                <input type="text" class="form-control category-item-detail" disabled value="Backpack">
+                    <ul class="list-group category-list">
+                        <li class="list-group-item">
+                            <div class="row form-group category" >
+                                <div class="container-fluid">
+                                    <div class="input-group category-item">
+                                        <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                                        <input name="itemName" type="text" class="form-control category-item-detail" disabled value="Backpack">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row form-group category" >
-                        <div class="container-fluid">
-                            <div class="input-group category-item">
-                                <span class="input-group-addon category-item-check"><input type="checkbox"></span>
-                                <input type="text" class="form-control category-item-detail" disabled value="Camera">
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row form-group category" >
+                                <div class="container-fluid">
+                                    <div class="input-group category-item">
+                                        <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                                        <input name="itemName" type="text" class="form-control category-item-detail" disabled value="Camera">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </li>
 
-                    {% for item in packingList %}
-                    <div class="row form-group category">
-                        <div class="container-fluid">
-                            <div class="input-group category-item">
-                                <span class="input-group-addon category-item-check"><input type="checkbox"></span>
-                                <input type="text" class="form-control category-item-detail" disabled value="{{ item.name }}">
+
+                        {% for item in packingList %}
+                        <li class="list-group-item">
+                            <div class="row form-group category">
+                                <div class="container-fluid">
+                                    <div class="input-group category-item">
+                                        <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                                        <input type="text" class="form-control category-item-detail" disabled value="{{ item['name'] }}">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    {% endfor %}
+                        </li>
+                        {% endfor %}
+                    </ul>
                 </div>
 
                 <div class="checked-already">
@@ -332,9 +348,8 @@
                             <span>Packed</span>
                         </div>
                     </div>
+                    <ul class="list-group category-list"></ul>
                 </div>
-
-
             </fieldset>
             <div class="modal fade" id="itemDetail" tabindex="-1" role="dialog" aria-labelledby="itemDetailLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -373,11 +388,11 @@
                 <div class="navbar-header">
                     <div class="col-xs-4">
                         <div class="dropup">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="arrangeByMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Arrange by
                                 <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <ul class="dropdown-menu" aria-labelledby="arrangeByMenu">
                                 <li><a href="#">By Category</a></li>
                                 <li><a href="#">By Activity</a></li>
                             </ul>
@@ -385,13 +400,13 @@
                     </div>
                     <div class="col-xs-4">
                         <div class="dropup">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="showPackedMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Select
                                 <span class="caret"></span>
                             </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                <li><a id="selectNone">Show Packed at the end</a></li>
-                                <li><a id="selectAll">Show only unpacked</a></li>
+                            <ul class="dropdown-menu" aria-labelledby="showPackedMenu">
+                                <li><a id="showPackedAtEnd">Show Packed at the end</a></li>
+                                <li><a id="showOnlyPacked">Show only unpacked</a></li>
                             </ul>
                         </div>
                     </div>
@@ -411,13 +426,13 @@
             });
             $('#packed-page input').on('ifChecked', function(){
                 $(this).parent().parent().parent().parent().parent().toggleClass("selected");
-                var packed = $(this).parent().parent().parent().parent().parent();
-                $(".checked-already").append(packed);
+                var packed = $(this).parent().parent().parent().parent().parent().parent();
+                $(".checked-already ul").append(packed);
             });
             $('#packed-page input').on('ifUnchecked', function(){
                 $(this).parent().parent().parent().parent().parent().toggleClass("selected");
-                var packed = $(this).parent().parent().parent().parent().parent();
-                $(".to-check").append(packed);
+                var packed = $(this).parent().parent().parent().parent().parent().parent();
+                $(".to-check ul").append(packed);
             });
             $("div.category-item").on("swipe", function () {
 

@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block body %}
 
-<div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-footer-fixed ui-page-active" id="new-event-page">
-    <div data-role="header" class="jqm-header ui-header" role="banner">
-        <h2 class="ui-header" role="heading">Pack IT</h2>
-    </div>
-    <div data-role="main" class="ui-content jqm-content" style="background-color: #00ffff">
-        <form method="post" class="form-horizontal form-inline" role="form">
-            <fieldset>
+<form method="post" class="form-horizontal form-inline" role="form">
+    <fieldset>
+        <div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-footer-fixed ui-page-active" id="new-event-page">
+            <div data-role="header" class="jqm-header ui-header" role="banner">
+                <h2 class="ui-header" role="heading">Pack IT</h2>
+            </div>
+            <div data-role="main" class="ui-content jqm-content" style="background-color: #00ffff">
                 <div class="form-group" style="text-align: center">
                     <h4>New Event</h4>
                 </div>
@@ -67,17 +67,210 @@
 
                 <div class="form-group" style="margin-top: 14px;">
                     <div class="col-xs-offset-4 controls">
-                        <button type="submit" class="btn btn-default" id="selectActivitySubmit">Select Activities</button>
+                        <a type="botton" class="btn btn-default" id="selectActivitySubmit">Select Activities</a>
                     </div>
                 </div>
 
-            </fieldset>
-        </form>
-    </div>
-</div>
+            </div>
+        </div>
+
+        <div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-footer-fixed" id="activity-page">
+            <div data-role="header" class="jqm-header ui-header" role="banner">
+                <nav class="navbar navbar-default navbar-fixed-top">
+                    <div class="container">
+                        <div class="col-xs-2"><a class="fa fa-chevron-left fa-2x pull-left" id="back" style="margin: 10px;"></a></div>
+                        <div class="navbar-header">
+                            <h3 class="ui-header" role="heading">Select Activity</h3>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div role="main" class="ui-content jqm-content container-fluid" style="background-color: #00ffff;margin-top: 50px;">
+                <div class="row form-group">
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Sports" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-futbol-o fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Sports</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Swimming" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-life-ring fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Swimming</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Bicycling" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-bicycle fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Bicycling</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Conference" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-user-circle fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Conference</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Snow Sports" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-snowflake-o fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Snow Sports</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Party" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-glass fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Party</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Fancy Dinner" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-cutlery fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Fancy Dinner</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Working" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-desktop fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Working</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Shopping" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-shopping-bag fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Shopping</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui-grid-b form-group" style="border-bottom: 3px solid #ffffff; padding-left: 15px;">
+                    <span style="color: #ffffff;">Customize</span>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-xs-4">
+                        <div class="square-responsive-custome">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-plus fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Customize</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div data-role="footer" class="jqm-footer ui-footer ui-bar-inherit ui-footer-fixed slideup">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-default" id="beginPackingSubmit">Begin Packing</button>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>
 
 <script>
     $(document).ready(function(){
+
+        $("#selectActivitySubmit").on("tap", function() {
+            $("#new-event-page").toggleClass("ui-page-active");
+            $("#activity-page").toggleClass("ui-page-active");
+        });
+
+        $("#back").on("tap", function() {
+            $("#new-event-page").toggleClass("ui-page-active");
+            $("#activity-page").toggleClass("ui-page-active");
+        });
 
         var mySlider = $("#lengthOfStay").bootstrapSlider();
         //var slider = new Slider('#lengthOfStay', {});
@@ -105,7 +298,7 @@
         });
 
         $("#remindPlus").on("tap", function () {
-           var current = $("#remindTimeInput").val();
+            var current = $("#remindTimeInput").val();
             current += 1;
             $("#remindTimeInput").val(current);
             $("#remindTimeLabel").text(current);
@@ -116,6 +309,16 @@
             if(current < 0) current = 0;
             $("#remindTimeInput").val(current);
             $("#remindTimeLabel").text(current);
+        });
+        $('.square-responsive').on('tap', function () {
+            $(this).toggleClass('red');
+            //$('.square-responsive .square-input').each(function(){this.checked = !this.checked;});
+            if($(this).find("input").attr('checked')){
+                $(this).find("input").removeAttr('checked');
+            }else{
+                $(this).find("input").attr('checked','checked');
+            }
+
         });
     });
 </script>
