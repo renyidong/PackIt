@@ -14,6 +14,7 @@ def load_user(user_id):
 
 @app.route('/login', methods=['GET'])
 def login():
+    flash("Please Login")
     return render_template('index.html')
 
 @app.route('/login', methods=['POST'])

@@ -6,7 +6,7 @@ from .user import login_manager
 
 @app.route("/")
 def home():
-    flash("HEll")
+    print()
     uid = 'urn:uuid:12345678-1234-5678-1234-567812345678'
     packingListSet = []
     for lst in ItemList.query.filter_by(owner_id=uid):
