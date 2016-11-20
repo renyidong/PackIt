@@ -5,25 +5,28 @@
 {% block body %}
 
 	 <div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-active" id="new-event-page" style="background-color: #00b4ef;">
-	<!--<div style = "padding: 0; hight: 100%;">-->
 		<div class="htmleaf-container" style = "padding: 0">
 			<div class="demo form-bg" style="padding: 20px 0;">
 				<div class="container">
 					<div class="row">
 						<div class="col-md-offset-3 col-md-6">
 							<form method="POST" class="form-horizontal">
+								<!-- logo -->
 		                        <span class="heading">
 		                        	<img class="header-log" src="../static/image/Pack it.jpg" alt="Pack IT">
 		                        </span>
+		                        <!-- user name -->
 								<div class="form-group">
 									<input type="text" class="form-control" id="inputEmail3" name="username" placeholder="Username/Email" required="required">
 									<i class="fa fa-user"></i>
 								</div>
+								<!-- password -->
 								<div class="form-group help">
 									<input type="password" class="form-control" id="inputPassword3" name="password" placeholder="Password" required="required">
 									<i class="fa fa-lock"></i>
 									<!-- <a href="#" class="fa fa-question-circle"></a> -->
 								</div>
+								<!-- checkbox and remember me -->
 								<div class="form-group">
 									<div class="main-checkbox">
 										<input type="checkbox" value="None" id="checkbox1" name="check"/>
@@ -32,6 +35,7 @@
 									<span class="text">Remember me</span>
 									<button type="submit" class="btn btn-default">SIGN IN</button>
 								</div>
+								<!-- create new account -->
 								<div class="form-group" style = "padding: 0 17%" id="signup">
 									<button type="button" value="go" class="btn btn-default" >CREATE YOUR PACKIT ACCOUNT</button>
 								</div>
@@ -47,6 +51,7 @@
 	</div>
 
 <script>
+// function for signup page rederict
 	$(document).ready(function () {
 		$('#flashes-message').showTopbarMessage({ background: "#ECECEC", close: 2000 });
 		$("#signup").on("tap", function () {
