@@ -14,7 +14,7 @@ Integer = db.Integer
 Boolean = db.Boolean
 
 class UUID(TypeDecorator):
-    impl = CHAR
+    impl = CHAR(32)
     
     @classmethod
     def new_random(cls):
@@ -25,7 +25,7 @@ class UUID(TypeDecorator):
             return value
         else:
             if not isinstance(value, uuid.UUID):
-                return uuid.UUID(value).urn
+                return uuid.UUID(value).hex
             else:
                 return value.urn
 
