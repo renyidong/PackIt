@@ -11,7 +11,7 @@ def home():
     for lst in ItemList.query.filter_by(owner_id=current_user.id):
         packingListSet.append({
             'id': lst.id,
-            'name': lst.title,
+            'name': lst.event.title,
             'remindTime': lst.event.remind_at.strftime('%x'),
             })
     return render_template('main.html', packingListSet=packingListSet)
