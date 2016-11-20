@@ -22,7 +22,7 @@ class UUID(TypeDecorator):
 
     def process_bind_param(self, value, dialect):
         if value is None:
-            return value
+            return None
         else:
             if not isinstance(value, uuid.UUID):
                 return uuid.UUID(value).hex
@@ -31,7 +31,7 @@ class UUID(TypeDecorator):
 
     def process_result_value(self, value, dialect):
         if value is None:
-            return value
+            return None
         else:
             return uuid.UUID(value)
 

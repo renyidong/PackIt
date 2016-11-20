@@ -34,4 +34,3 @@ def post_new_event():
     db.session.add(l)
     db.session.commit()
     return redirect(url_for('packing_list',list_id=l.id))
-    

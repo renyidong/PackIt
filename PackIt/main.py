@@ -1,4 +1,4 @@
-from flask import request, render_template, send_from_directory, flash
+from flask import request, render_template, send_from_directory, flash, url_for
 from flask_login import current_user, login_required
 
 from . import app
@@ -13,5 +13,6 @@ def home():
             'id': lst.id,
             'name': lst.event.title,
             'remindTime': lst.event.remind_at.strftime('%x'),
+            'url': url_for('packing_list', list_id=lst.id),
             })
     return render_template('main.html', packingListSet=packingListSet)
