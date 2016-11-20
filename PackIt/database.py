@@ -134,11 +134,6 @@ class Checked(db.Model):
     item_id = Column(UUID, ForeignKey('item.id'))
 
 
-if app.config['DROP_DATABASE']:
-    db.drop_all()
-if app.config['INIT_DATABASE']:
-    db.create_all()
-
 @app.cli.command()
 def inject_test_data():
     db.drop_all()
