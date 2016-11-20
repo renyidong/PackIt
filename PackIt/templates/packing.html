@@ -13,13 +13,13 @@
             <div class="container">
                 <div class="navbar-header" style="padding-top: 5px;">
                     <div class="col-xs-2">
-                        <button class="btn btn-link fa fa-plus fa-2x pull-right" data-toggle="modal" data-target="#itemDetail" data-itemname=""></button>
+                        <button class="btn btn-link fa fa-plus fa-2x pull-right" data-toggle="modal" data-target="#addNewItemModel" data-itemname=""></button>
                     </div>
                     <div class="col-xs-8" style="text-align: center;margin-top: 10px">
                         <span class="h3">Packing List</span>
                     </div>
                     <div class="col-xs-2">
-                        <button class="btn btn-link fa fa-share-square-o fa-2x pull-right" data-toggle="modal" data-target="#itemDetail" data-itemname=""></button>
+                        <button class="btn btn-link fa fa-share-square-o fa-2x pull-right" data-toggle="modal" data-target="#shareDialog"></button>
                     </div>
                 </div>
             </div>
@@ -33,24 +33,27 @@
                     <ul class="list-group category-list" id="to_check_list">
                         {% for item in packingList %}
                         <li class="list-group-item">
-                            <div class="behind">
-                                <a href="#" class="ui-btn delete-btn">Delete</a>
-                                <a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal"
-                                   data-target="#itemDetail" data-itemName="{{ item['name'] }}">Edit</a>
-                            </div>
-                            <div class="row form-group category">
-                                <div class="container-fluid">
-                                    <div class="input-group category-item">
-                                        <!--<span class="input-group-addon category-item-check"><input type="checkbox"></span>-->
-                                        <input type="text" class="form-control category-item-detail" disabled value="{{ item['name'] }}">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-lg btn-default category-item-info" type="button">
-                                                <span class="fa fa-user"></span>
-                                            </button>
-                                        </span>
+                            <form method="post" target="{{url_for('item_del')}}" id="itemInforDetailForm">
+                                <div class="behind">
+                                    <a href="#" class="ui-btn delete-btn">Delete</a>
+                                    <a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal" 
+                                       data-target="#ModifyItemDetail" data-itemID="{{ item['id'] }}" data-itemName="{{ item['name'] }}">Edit</a>
+                                </div>
+                                <div class="row form-group category">
+                                    <div class="container-fluid">
+                                        <div class="input-group category-item">
+                                            <!--<span class="input-group-addon category-item-check"><input type="checkbox"></span>-->
+                                            <input name="id" type="hidden" value="{{ item['id'] }}">
+                                            <input name="name" type="text" class="form-control category-item-detail" disabled value="{{ item['name'] }}">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-lg btn-default category-item-info" type="button">
+                                                    <span class="fa fa-user"></span>
+                                                </button>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </li>
                         {% endfor %}
                     </ul>
@@ -69,7 +72,7 @@
 
     <div data-role="footer" class="jqm-footer ui-footer">
         <nav class="navbar navbar-default navbar-fixed-bottom">
-            <div class="container">
+            <div class="container" style="padding-top: 8px;">
                 <div class="navbar-header">
                     <div class="col-xs-4">
                         <div class="dropup">
@@ -84,6 +87,16 @@
                         </div>
                     </div>
                     <div class="col-xs-4">
+                        <div class="dropup">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="showPackedMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Select
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="showPackedMenu">
+                                <li><a id="showOnlyMyItems">Show only my items</a></li>
+                                <li><a id="showOnlyPublicItems">Show only public items</a></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="col-xs-4">
                         <button type="submit" class="btn btn-primary" id="packedButtonSubmit">Pack All</button>
@@ -94,7 +107,38 @@
     </div>
 </div>
 
-<div class="modal" id="itemDetail" tabindex="-1" role="dialog" aria-labelledby="itemDetailLabel" aria-hidden="true">
+<!--Add new Item Modal-->
+<div class="modal" id="addNewItemModel" tabindex="-1" role="dialog" aria-labelledby="addNewItemModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="addNewItemModelLabel">Create New Item</h4>
+            </div>
+            <form method="post" target="{{url_for('new_item')}}" class="form-horizontal" id="addNewItemModelForm">
+                <div class="modal-body">
+                    <div class="">
+                        <label for="new-item-name" class="form-control-label">Item Name:</label>
+                        <input name="name" type="text" class="form-control" id="new-item-name" placeholder="* required" data-toggle="popover" 
+                                data-placement="top" data-content="Item Name Required">
+                    </div>
+                    <div class="">
+                        <label for="new-item-category-name" class="form-control-label">Category Name:</label>
+                        <input name="categoryName" type="text" class="form-control" id="new-item-category-name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="addNewItemButton">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Edit Item Modal-->
+<div class="modal" id="ModifyItemDetail" tabindex="-1" role="dialog" aria-labelledby="itemDetailLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -103,40 +147,69 @@
                 </button>
                 <h4 class="modal-title" id="itemDetailLabel">Edit Item</h4>
             </div>
-            <form class="form-horizontal">
+            <form method="post" target="{{url_for('item_put')}}" class="form-horizontal" id="modifyItemModalForm">
                 <div class="modal-body">
                     <div class="">
                         <label for="item-name" class="form-control-label">Item Name:</label>
-                        <input type="text" class="form-control" id="item-name">
+                        <input name="id" id="edit-item-id" type="hidden" value="">
+                        <input name="name" type="text" class="form-control" id="edit-item-name" placeholder="* required" data-toggle="popover" 
+                                data-placement="top" data-content="Item Name cannot be empty">
                     </div>
                     <div class="">
                         <label for="category-name" class="form-control-label">Category Name:</label>
-                        <input type="text" class="form-control" id="category-name">
+                        <input name="categoryName" type="text" class="form-control" id="category-name">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="addItemButton">Add</button>
+                    <button type="button" class="btn btn-primary" id="editItemButton">Add</button>
                 </div>
             </form>
         </div>
     </div>
-</div>                    
+</div>
+
+<div class="modal" id="shareDialog" tabindex="-1" role="dialog" aria-labelledby="shareDialogLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="shareDialogLabel">Choose Participants</h4>
+            </div>
+            <form class="form-horizontal">
+                <div class="modal-body">
+                    <div class="">
+                        <label for="item-name" class="form-control-label">Input Participants: </label>
+                        <input type="text" class="form-control" id="item-name" placeholder="Input participant's Email" data-toggle="popover" 
+                                data-placement="top" data-content="Input participant's Email">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="addParticipantButton">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script>
         $(document).ready(function(){
-            $('#itemDetail').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget) // Button that triggered the modal
-                var itemName = button.data('itemname') // Extract info from data-* attributes
-
-                var modal = $(this)
-                modal.find('.modal-body #item-name').val(itemName)
+            $('#ModifyItemDetail').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var itemName = button.data('itemname'); // Extract info from data-* attributes
+                var itemID = button.data('itemID');
+                var modal = $(this);
+                modal.find('.modal-body #edit-item-name').val(itemName);
+                modal.find('.modal-body #edit-item-id').val(itemID);
             });
             $(".category-item-info").on("tap", function() {
                 $(this).find("span").toggleClass("fa-user");
                 $(this).find("span").toggleClass("fa-users");
             });
-            $('input').on('tap', function(){
+            $('.category-item input[name="name"]').on('tap', function(){
                 $(this).parent().parent().parent().parent().toggleClass("checked-already");
                 var packed = $(this).parent().parent().parent().parent();
                 if(packed.hasClass("checked-already")){
@@ -147,12 +220,35 @@
             });
 
             // add new item event
-            $("#addItemButton").on("tap",function () {
+            $("#addNewItemButton").on("tap", function() {
+                var itemName = $("#new-item-name").val();
+                var categoryName = $("#new-item-category-name").val();
+                if( itemName != "") {
+                    $("#addNewItemModelForm").submit();
+                    //var newItem = createNewItem(itemName);
+                    
+                    //$("#to_check_list").append(newItem);
+                    //listOperation();
+                    //$('#itemDetail').modal('hide')
+                }else{
+                    $("#new-item-name").popover('show');
+                }
+            });
+            $("#editItemButton").on("tap",function () {
                 var itemName = $("#item-name").val();
                 var categoryName = $("#category-name").val();
-                //alert(itemName);
                 if( itemName != "") {
-                    var newItem = '<li class="list-group-item">';
+                    $("#modifyItemModalForm").submit();
+                }else{
+                    $("#item-name").popover('show');
+                }
+            });
+            $("packedButtonSubmit").on("tap", function() {
+               $("#itemSelectForm").submit(); 
+            });
+            
+            function createNewItem(itemName){
+                var newItem = '<li class="list-group-item">';
                     newItem += '<div class="behind"><a href="#" class="ui-btn delete-btn">Delete</a>';
                     newItem += '<a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal" data-target="#itemDetail" data-itemName="' + itemName + '">Edit</a>';
                     newItem += '</div>';
@@ -161,11 +257,12 @@
                     newItem += '<div class="input-group category-item">';
                     newItem += '<input type="text" class="form-control category-item-detail" disabled value="' + itemName + '">';
                     newItem += '<span class="input-group-btn">';
-                    newItem += '<button class="btn btn-default category-item-info" type="button" data-toggle="modal" data-target="#itemDetail" data-itemname="' + itemName + '">';
+                    newItem += '<button class="btn btn-default category-item-info" type="button">';
                     newItem += '<span class="fa fa-user"></span></button></span></div></div></div>';
-                    $("#itemSelectForm fieldset ul").append(newItem);
-
-                    function prevent_default(e) {
+                return newItem;
+            }
+            function listOperation(){
+                function prevent_default(e) {
                         e.preventDefault();
                     }
                     function disable_scroll() {
@@ -204,9 +301,10 @@
                             });
                     $("li .delete-btn").on("touchend", function (e) {
                         e.preventDefault()
-                        $(this).parents('li').slideUp('fast', function() {
-                            $(this).remove()
-                        })
+                        // $(this).parents('li').slideUp('fast', function() {
+                        //     $(this).remove()
+                        // })
+                        $("#itemInforDetailForm").submit();
                     });
                     $(".category-item-info").on("tap", function() {
                         $(this).find("span").toggleClass("fa-user");
@@ -221,13 +319,7 @@
                             packed.appendTo("#to_check_list");
                         }
                     });
-
-                    $('#itemDetail').modal('hide')
-                }
-            });
-            $("packedButtonSubmit").on("tap", function() {
-               $("#itemSelectForm").submit(); 
-            });
+            }
 
         });
 

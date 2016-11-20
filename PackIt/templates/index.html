@@ -54,6 +54,12 @@
 // function for signup page rederict
 	$(document).ready(function () {
 		$('#flashes-message').showTopbarMessage({ background: "#ECECEC", close: 2000 });
+		// layer.open({
+		//   //style: 'border:none; background-color:#78BA32; color:#fff;',
+		//   type: 1,
+		//   content: $('#flashes-message'),
+		//   time: 2
+		// })
 		$("#signup").on("tap", function () {
             window.location.href = "{{ url_for('signup') }}";
         });
