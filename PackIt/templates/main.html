@@ -51,34 +51,26 @@
         </div>
     </div>
 
-    <div role="main" class="ui-content jqm-content container-fluid" style="background-color: #ffffff;margin-top: 50px;">
-        <div class="row form-group list-group" style=" border-bottom: 1px solid black;">
-            <div class="container-fluid">
-                <div class="col-xs-10 list-infor" data-toggle="modal" data-target="#modifyPackingListPop">
-                    <div><span>Albany leave</span></div>
-                    <div><span>Oct 19, 2016</span></div>
+    <div role="main" class="ui-content jqm-content" style="background-color: #ffffff;margin-top: 50px;padding: 0;">
+        <ul class=list-group>
+            {% for oneList in packingListSet %}
+            <li class=list-group-item>
+                <div class="row list-group">
+                    <div class="container-fluid">
+                        <div class="col-xs-10 list-infor" data-toggle="modal" data-target="#modifyPackingListPop">
+                            <!-- Redirect to url_for('packing_list', list_id=oneList['id']) -->
+                            <div><span>{{ oneList['name'] }}</span></div>
+                            <div><span>{{ oneList['remindTime'] }}</span></div>
+                        </div>
+                        <div class="col-xs-2">
+                            <span><i class="fa fa-check fa-2x" style="display: none"></i></span>
+                            <span><i class="fa fa-clock-o fa-2x" style="display: block"></i></span>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-xs-2">
-                    <span><i class="fa fa-check fa-2x" style="display: none"></i></span>
-                    <span><i class="fa fa-clock-o fa-2x" style="display: block"></i></span>
-                </div>
-            </div>
-        </div>
-        {% for oneList in packingListSet %}
-        <div class="row form-group list-group">
-            <div class="container-fluid">
-                <div class="col-xs-10 list-infor" data-toggle="modal" data-target="#modifyPackingListPop">
-                    <!-- Redirect to url_for('packing_list', list_id=oneList['id']) -->
-                    <div><span>{{ oneList['name'] }}</span></div>
-                    <div><span>{{ oneList['remindTime'] }}</span></div>
-                </div>
-                <div class="col-xs-2">
-                    <span><i class="fa fa-check" style="display: none"></i></span>
-                    <span><i class="fa fa-clock-o" style="display: block"></i></span>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+            </li>
+            {% endfor %}
+        </ul>
     </div>
 
     <div data-role="footer" class="jqm-footer ui-footer">

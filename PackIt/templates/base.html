@@ -29,7 +29,7 @@
     {% with messages = get_flashed_messages() %}
     {% if messages %}
     <div id="flashes-message" style="display: none;">
-        <ul>
+        <ul class="list-unstyled">
         {% for message in messages %}
             <li>{{ message }}</li>
         {% endfor %}
