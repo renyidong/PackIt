@@ -3,6 +3,8 @@
 <link rel="stylesheet" href="/static/plugins/iCheck/css/flat/red.css">
 <script src="/static/plugins/iCheck/js/icheck.min.js"></script>
 <script src="/static/js/demo.js"></script>
+<!--<script src="/static/js/jquery.google.fastbutton.js"></script>-->
+<!--<script src="/static/js/google.fastbutton.js"></script>-->
 {% endblock %}
 {% block body %}
 <div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-footer-fixed ui-page-active" id="choosing-page">
@@ -23,34 +25,45 @@
             </div>
         </nav>
     </div>
-    <form method="post" class="form-horizontal" role="form" id="itemSelectForm">
-        <fieldset>
-            <div role="main" class="ui-content jqm-content" style="background-color: #ffffff;margin-top: 50px; padding: 0;">
-                <ul class="list-group category-list">
-                    {% for item in packingList %}
-                    <li class="list-group-item">
-                        <div class="behind">
-                            <a href="#" class="ui-btn delete-btn">Delete</a>
-                            <a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal"
-                               data-target="#itemDetail" data-itemName="{{ item['name'] }}">Edit</a>
-                        </div>
-                        <div class="row form-group category">
-                        <div class="container-fluid">
-                            <div class="input-group category-item">
-                                <span class="input-group-addon category-item-check"><input type="checkbox"></span>
-                                <input type="text" class="form-control category-item-detail" disabled value="{{ item['name'] }}">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default category-item-info" type="button" data-toggle="modal"
-                                            data-target="#itemDetail" data-itemName="{{ item['name'] }}">
-                                        <span class="fa fa-info-circle"></span>
-                                    </button>
-                                </span>
+    
+    <div role="main" class="ui-content jqm-content" style="background-color: #ffffff;margin-top: 50px; padding: 0; height: 100%;">
+        <form method="post" class="form-horizontal" role="form" id="itemSelectForm" style="height: 100%;">
+            <fieldset>
+                <div class="to-check">
+                    <ul class="list-group category-list" id="to_check_list">
+                        {% for item in packingList %}
+                        <li class="list-group-item">
+                            <div class="behind">
+                                <a href="#" class="ui-btn delete-btn">Delete</a>
+                                <a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal"
+                                   data-target="#itemDetail" data-itemName="{{ item['name'] }}">Edit</a>
                             </div>
+                            <div class="row form-group category">
+                                <div class="container-fluid">
+                                    <div class="input-group category-item">
+                                        <!--<span class="input-group-addon category-item-check"><input type="checkbox"></span>-->
+                                        <input type="text" class="form-control category-item-detail" disabled value="{{ item['name'] }}">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-lg btn-default category-item-info" type="button">
+                                                <span class="fa fa-user"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="checked-already">
+                    <div class="row form-group category-header" style="background-color: #ECECEC">
+                        <div class="container-fluid packed-header">
+                            <span>&nbsp;&nbsp;&nbsp;&nbsp;Packed</span>
                         </div>
                     </div>
-                    </li>
-                    {% endfor %}
-                </ul>
+                    <ul class="list-group category-list" id="checked_list"></ul>
+                </div>
+                
                 <div class="modal fade" id="itemDetail" tabindex="-1" role="dialog" aria-labelledby="itemDetailLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -60,28 +73,30 @@
                                 </button>
                                 <h4 class="modal-title" id="itemDetailLabel">Edit Item</h4>
                             </div>
-                            <div class="modal-body">
-                                <form class="form-horizontal">
+                            <form class="form-horizontal">
+                                <div class="modal-body">
                                     <div class="">
                                         <label for="item-name" class="form-control-label">Item Name:</label>
                                         <input type="text" class="form-control" id="item-name">
                                     </div>
                                     <div class="">
-                                        <label for="category-name" class="form-control-label">Item Name:</label>
+                                        <label for="category-name" class="form-control-label">Category Name:</label>
                                         <input type="text" class="form-control" id="category-name">
                                     </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" id="addItemButton">Add</button>
-                            </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" id="addItemButton">Add</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </div>
+            </fieldset>
+        </form>
+    </div>
 
-            <div data-role="footer" class="jqm-footer ui-footer">
+    <div data-role="footer" class="jqm-footer ui-footer">
         <nav class="navbar navbar-default navbar-fixed-bottom">
             <div class="container">
                 <div class="navbar-header">
@@ -98,16 +113,6 @@
                         </div>
                     </div>
                     <div class="col-xs-4">
-                        <div class="dropup">
-                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Select
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                <li><a id="selectNone">Select None</a></li>
-                                <li><a id="selectAll">Select All</a></li>
-                            </ul>
-                        </div>
                     </div>
                     <div class="col-xs-4">
                         <button type="submit" class="btn btn-primary" id="packedButtonSubmit">Pack All</button>
@@ -116,33 +121,30 @@
             </div>
         </nav>
     </div>
-        </fieldset>
-    </form>
+        
+    
 
     <script>
         $(document).ready(function(){
-            $('#choosing-page input').iCheck({
-                checkboxClass: 'icheckbox_flat-red',
-                radioClass: 'iradio_flat-red'
-            });
-            $('#choosing-page input').on('ifChecked', function(){
-                $(this).parent().parent().parent().parent().parent().toggleClass("selected");
-            });
-            $('#choosing-page input').on('ifUnchecked', function(){
-                $(this).parent().parent().parent().parent().parent().toggleClass("selected");
-            });
-            $("#selectNone").on('tap',function () {
-                $('input').iCheck('uncheck');
-            });
-            $("#selectAll").on('tap',function () {
-                $('input').iCheck('check');
-            });
             $('#itemDetail').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget) // Button that triggered the modal
                 var itemName = button.data('itemname') // Extract info from data-* attributes
 
                 var modal = $(this)
                 modal.find('.modal-body #item-name').val(itemName)
+            });
+            $(".category-item-info").on("tap", function() {
+                $(this).find("span").toggleClass("fa-user");
+                $(this).find("span").toggleClass("fa-users");
+            });
+            $('input').on('tap', function(){
+                $(this).parent().parent().parent().parent().toggleClass("checked-already");
+                var packed = $(this).parent().parent().parent().parent();
+                if(packed.hasClass("checked-already")){
+                    packed.appendTo("#checked_list");
+                }else{
+                    packed.appendTo("#to_check_list");
+                }
             });
 
             // add new item event
@@ -222,10 +224,9 @@
                     $('#itemDetail').modal('hide')
                 }
             });
-
-
-
-
+            $("packedButtonSubmit").on("tap", function() {
+               $("#itemSelectForm").submit(); 
+            });
 
         });
 

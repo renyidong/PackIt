@@ -14,7 +14,7 @@ $(function() {
     var x;
     $('.category-item')
         .on('touchstart', function(e) {
-            console.log(e.originalEvent.pageX)
+            //console.log(e.originalEvent.pageX)
             $('.category-item.open').css('left', '0px').removeClass('open') // close em all
             $(e.currentTarget).addClass('open')
             x = e.originalEvent.targetTouches[0].pageX // anchor point
@@ -50,3 +50,4 @@ $(function() {
         $("#packed-page").toggleClass("ui-page-active");
     });
 });
+
