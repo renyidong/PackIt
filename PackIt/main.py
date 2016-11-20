@@ -1,15 +1,14 @@
 from flask import request, render_template, send_from_directory, flash
+from flask_login import current_user, login_required
 
 from . import app
 from .database import ItemList
-from .user import login_manager
 
 @app.route("/")
+@login_required
 def home():
-    print()
-    uid = 'urn:uuid:12345678-1234-5678-1234-567812345678'
     packingListSet = []
-    for lst in ItemList.query.filter_by(owner_id=uid):
+    for lst in ItemList.query.filter_by(owner_id=current_user.id):
         packingListSet.append({
             'id': lst.id,
             'name': lst.title,
