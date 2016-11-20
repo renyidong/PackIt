@@ -11,4 +11,5 @@ from . import user
 from . import friend
 from . import event
 from . import packing_list
+from . import item
 

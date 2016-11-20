@@ -33,7 +33,7 @@
                     <ul class="list-group category-list" id="to_check_list">
                         {% for item in packingList %}
                         <li class="list-group-item">
-                            <form method="post" target="{{url_for('item_del')}}" id="itemInforDetailForm">
+                            <form method="post" target="{{url_for('item_del_uni')}}" id="itemInforDetailForm">
                                 <div class="behind">
                                     <a href="#" class="ui-btn delete-btn">Delete</a>
                                     <a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal" 
@@ -117,7 +117,7 @@
                 </button>
                 <h4 class="modal-title" id="addNewItemModelLabel">Create New Item</h4>
             </div>
-            <form method="post" target="{{url_for('new_item')}}" class="form-horizontal" id="addNewItemModelForm">
+            <form method="post" target="{{url_for('item_new')}}" class="form-horizontal" id="addNewItemModelForm">
                 <div class="modal-body">
                     <div class="">
                         <label for="new-item-name" class="form-control-label">Item Name:</label>
@@ -147,7 +147,7 @@
                 </button>
                 <h4 class="modal-title" id="itemDetailLabel">Edit Item</h4>
             </div>
-            <form method="post" target="{{url_for('item_put')}}" class="form-horizontal" id="modifyItemModalForm">
+            <form method="post" target="{{url_for('item_put_uni')}}" class="form-horizontal" id="modifyItemModalForm">
                 <div class="modal-body">
                     <div class="">
                         <label for="item-name" class="form-control-label">Item Name:</label>

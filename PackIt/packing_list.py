@@ -11,6 +11,7 @@ def packing_list(list_id):
     for i in ItemList.query.get(list_id).items:
         packingList.append({
             'name': i.title,
+            'id': i.id,
         })
     return render_template('packing.html', packingList=packingList)
 
