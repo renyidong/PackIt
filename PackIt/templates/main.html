@@ -34,31 +34,15 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modifyPackingListPop" tabindex="-1" role="dialog" aria-labelledby="modifyPackingListPopLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="modifyPackingListPopModalLabel">Want to modify the list?</h4>
-                </div>
-                <div class="modal-body">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="ModifyPackingListBtn">Modify</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div role="main" class="ui-content jqm-content" style="background-color: #ffffff;margin-top: 50px;padding: 0;">
         <ul class=list-group>
             {% for oneList in packingListSet %}
             <li class=list-group-item>
                 <div class="row list-group">
                     <div class="container-fluid">
-                        <div class="col-xs-10 list-infor" data-toggle="modal" data-target="#modifyPackingListPop">
+                        <div class="col-xs-10 list-infor">
                             <!-- Redirect to url_for('packing_list', list_id=oneList['id']) -->
+                            <input type="hidden" value="{{ oneList['name'] }}">
                             <div><span>{{ oneList['name'] }}</span></div>
                             <div><span>{{ oneList['remindTime'] }}</span></div>
                         </div>
@@ -104,7 +88,8 @@
 <script>
     $(document).ready(function(){
         $('.form-group .list-infor').on("tap", function () {
-
+            url = $(this).find("input").val();
+            window.location.href = url;
         });
 
 

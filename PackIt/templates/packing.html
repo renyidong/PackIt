@@ -63,35 +63,6 @@
                     </div>
                     <ul class="list-group category-list" id="checked_list"></ul>
                 </div>
-                
-                <div class="modal fade" id="itemDetail" tabindex="-1" role="dialog" aria-labelledby="itemDetailLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h4 class="modal-title" id="itemDetailLabel">Edit Item</h4>
-                            </div>
-                            <form class="form-horizontal">
-                                <div class="modal-body">
-                                    <div class="">
-                                        <label for="item-name" class="form-control-label">Item Name:</label>
-                                        <input type="text" class="form-control" id="item-name">
-                                    </div>
-                                    <div class="">
-                                        <label for="category-name" class="form-control-label">Category Name:</label>
-                                        <input type="text" class="form-control" id="category-name">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" id="addItemButton">Add</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </fieldset>
         </form>
     </div>
@@ -121,10 +92,38 @@
             </div>
         </nav>
     </div>
-        
-    
+</div>
 
-    <script>
+<div class="modal" id="itemDetail" tabindex="-1" role="dialog" aria-labelledby="itemDetailLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="itemDetailLabel">Edit Item</h4>
+            </div>
+            <form class="form-horizontal">
+                <div class="modal-body">
+                    <div class="">
+                        <label for="item-name" class="form-control-label">Item Name:</label>
+                        <input type="text" class="form-control" id="item-name">
+                    </div>
+                    <div class="">
+                        <label for="category-name" class="form-control-label">Category Name:</label>
+                        <input type="text" class="form-control" id="category-name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="addItemButton">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>                    
+
+<script>
         $(document).ready(function(){
             $('#itemDetail').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget) // Button that triggered the modal
@@ -160,22 +159,11 @@
                     newItem += '<div class="row form-group category" >';
                     newItem += '<div class="container-fluid">';
                     newItem += '<div class="input-group category-item">';
-                    newItem += '<span class="input-group-addon category-item-check"><input type="checkbox"></span>';
                     newItem += '<input type="text" class="form-control category-item-detail" disabled value="' + itemName + '">';
                     newItem += '<span class="input-group-btn">';
                     newItem += '<button class="btn btn-default category-item-info" type="button" data-toggle="modal" data-target="#itemDetail" data-itemname="' + itemName + '">';
-                    newItem += '<span class="fa fa-info-circle"></span></button></span></div></div></div>';
+                    newItem += '<span class="fa fa-user"></span></button></span></div></div></div>';
                     $("#itemSelectForm fieldset ul").append(newItem);
-                    $('input').iCheck({
-                        checkboxClass: 'icheckbox_flat-red',
-                        radioClass: 'iradio_flat-red'
-                    });
-                    $('input').on('ifChecked', function(){
-                        $(this).parent().parent().parent().parent().parent().toggleClass("selected");
-                    });
-                    $('input').on('ifUnchecked', function(){
-                        $(this).parent().parent().parent().parent().parent().toggleClass("selected");
-                    });
 
                     function prevent_default(e) {
                         e.preventDefault();
@@ -220,6 +208,19 @@
                             $(this).remove()
                         })
                     });
+                    $(".category-item-info").on("tap", function() {
+                        $(this).find("span").toggleClass("fa-user");
+                        $(this).find("span").toggleClass("fa-users");
+                    });
+                    $('input').on('tap', function(){
+                        $(this).parent().parent().parent().parent().toggleClass("checked-already");
+                        var packed = $(this).parent().parent().parent().parent();
+                        if(packed.hasClass("checked-already")){
+                            packed.appendTo("#checked_list");
+                        }else{
+                            packed.appendTo("#to_check_list");
+                        }
+                    });
 
                     $('#itemDetail').modal('hide')
                 }
@@ -231,7 +232,5 @@
         });
 
     </script>
-
-</div>
 
 {% endblock %}

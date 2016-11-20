@@ -28,35 +28,14 @@
             <fieldset>
                 <div class="to-check">
                     <ul class="list-group category-list">
-                        <li class="list-group-item">
-                            <div class="row form-group category" >
-                                <div class="container-fluid">
-                                    <div class="input-group category-item">
-                                        <span class="input-group-addon category-item-check"><input type="checkbox"></span>
-                                        <input name="itemName" type="text" class="form-control category-item-detail" disabled value="Backpack">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="row form-group category" >
-                                <div class="container-fluid">
-                                    <div class="input-group category-item">
-                                        <span class="input-group-addon category-item-check"><input type="checkbox"></span>
-                                        <input name="itemName" type="text" class="form-control category-item-detail" disabled value="Camera">
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-
-
                         {% for item in packingList %}
                         <li class="list-group-item">
                             <div class="row form-group category">
                                 <div class="container-fluid">
                                     <div class="input-group category-item">
                                         <span class="input-group-addon category-item-check"><input type="checkbox"></span>
-                                        <input type="text" class="form-control category-item-detail" disabled value="{{ item['name'] }}">
+                                        <input type="text" class="form-control category-item-detail" disabled value="{{ item['name'] }}" data-toggle="modal"
+                                        data-target="#itemDetail" data-itemName="{{ item['name'] }}">
                                     </div>
                                 </div>
                             </div>
