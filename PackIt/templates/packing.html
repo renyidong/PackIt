@@ -9,92 +9,48 @@
     <div data-role="header" class="jqm-header ui-header" role="banner">
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
-                <div class="navbar-header">
-                    <div class="col-xs-2"><a class="fa fa-chevron-left fa-2x pull-left" style="margin: 10px;"></a></div>
-                    <div class="col-xs-8" style="text-align: center;margin-top: 10px">
-                        <span class="h3">Choosing Items</span>
-                    </div>
+                <div class="navbar-header" style="padding-top: 5px;">
                     <div class="col-xs-2">
                         <button class="btn btn-link fa fa-plus fa-2x pull-right" data-toggle="modal" data-target="#itemDetail" data-itemname=""></button>
+                    </div>
+                    <div class="col-xs-8" style="text-align: center;margin-top: 10px">
+                        <span class="h3">Packing List</span>
+                    </div>
+                    <div class="col-xs-2">
+                        <button class="btn btn-link fa fa-share-square-o fa-2x pull-right" data-toggle="modal" data-target="#itemDetail" data-itemname=""></button>
                     </div>
                 </div>
             </div>
         </nav>
     </div>
-
-    <div role="main" class="ui-content jqm-content" style="background-color: #ffffff;margin-top: 50px; padding: 0;">
-        <form method="post" class="form-horizontal" role="form" id="itemSelectForm">
-            <fieldset>
+    <form method="post" class="form-horizontal" role="form" id="itemSelectForm">
+        <fieldset>
+            <div role="main" class="ui-content jqm-content" style="background-color: #ffffff;margin-top: 50px; padding: 0;">
                 <ul class="list-group category-list">
-                    <li class="list-group-item">
-                        <div class="behind">
-                            <a href="#" class="ui-btn delete-btn">Delete</a>
-                            <a href="#" class="ui-btn edit-btn pull-left">Edit</a>
-                        </div>
-                        <div class="row form-group category" >
-                            <div class="container-fluid">
-                                <div class="input-group category-item">
-                                    <span class="input-group-addon category-item-check"><input type="checkbox"></span>
-                                    <input name="itemName" type="text" class="form-control category-item-detail" disabled value="Backpack">
-                                    <span class="input-group-btn">
-                                    <button class="btn btn-default category-item-info" type="button" data-toggle="modal"
-                                            data-target="#itemDetail" data-itemname="Backpack">
-                                        <span class="fa fa-info-circle"></span>
-                                    </button>
-                                </span>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+                    {% for item in packingList %}
                     <li class="list-group-item">
                         <div class="behind">
                             <a href="#" class="ui-btn delete-btn">Delete</a>
                             <a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal"
-                               data-target="#itemDetail" data-itemname="Camera">Edit</a>
+                               data-target="#itemDetail" data-itemName="{{ item['name'] }}">Edit</a>
                         </div>
-                        <div class="row form-group category" >
-                            <div class="container-fluid">
-                                <div class="input-group category-item">
-                                    <span class="input-group-addon category-item-check"><input type="checkbox"></span>
-                                    <input name="itemName" type="text" class="form-control category-item-detail" disabled value="Camera">
-                                    <span class="input-group-btn">
+                        <div class="row form-group category">
+                        <div class="container-fluid">
+                            <div class="input-group category-item">
+                                <span class="input-group-addon category-item-check"><input type="checkbox"></span>
+                                <input type="text" class="form-control category-item-detail" disabled value="{{ item['name'] }}">
+                                <span class="input-group-btn">
                                     <button class="btn btn-default category-item-info" type="button" data-toggle="modal"
-                                            data-target="#itemDetail" data-itemname="Camera">
+                                            data-target="#itemDetail" data-itemName="{{ item['name'] }}">
                                         <span class="fa fa-info-circle"></span>
                                     </button>
                                 </span>
-                                </div>
                             </div>
                         </div>
+                    </div>
                     </li>
+                    {% endfor %}
                 </ul>
-
-
-
-                {% for item in packingList %}
-                <li class="list-group-item">
-                    <div class="behind">
-                        <a href="#" class="ui-btn delete-btn">Delete</a>
-                        <a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal"
-                           data-target="#itemDetail" data-itemName="{{ item['name'] }}">Edit</a>
-                    </div>
-                    <div class="row form-group category">
-                    <div class="container-fluid">
-                        <div class="input-group category-item">
-                            <span class="input-group-addon category-item-check"><input type="checkbox"></span>
-                            <input type="text" class="form-control category-item-detail" disabled value="{{ item['name'] }}">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default category-item-info" type="button" data-toggle="modal"
-                                        data-target="#itemDetail" data-itemName="{{ item['name'] }}">
-                                    <span class="fa fa-info-circle"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                </li>
-                {% endfor %}
-
                 <div class="modal fade" id="itemDetail" tabindex="-1" role="dialog" aria-labelledby="itemDetailLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -123,11 +79,9 @@
                         </div>
                     </div>
                 </div>
-            </fieldset>
-        </form>
-    </div>
+            </div>
 
-    <div data-role="footer" class="jqm-footer ui-footer">
+            <div data-role="footer" class="jqm-footer ui-footer">
         <nav class="navbar navbar-default navbar-fixed-bottom">
             <div class="container">
                 <div class="navbar-header">
@@ -162,6 +116,8 @@
             </div>
         </nav>
     </div>
+        </fieldset>
+    </form>
 
     <script>
         $(document).ready(function(){
