@@ -27,7 +27,7 @@ class UUID(TypeDecorator):
             if not isinstance(value, uuid.UUID):
                 return uuid.UUID(value).hex
             else:
-                return value.urn
+                return value.hex
 
     def process_result_value(self, value, dialect):
         if value is None:
