@@ -1,53 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Login In</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/Login.css">
-	<!--[if IE]>
-		<script src="http://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-	<![endif]-->
-</head>
-<body>
-	<div class="htmleaf-container">
-		<div class="demo form-bg" style="padding: 20px 0;">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-offset-3 col-md-6">
-						<form class="form-horizontal">
+{% extends "base.html" %}
+{% block more_head %}
+<link rel="stylesheet" href="/static/css/Login.css">
+{% endblock %}
+{% block body %}
+
+	 <div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-active" id="new-event-page" style="background-color: #00b4ef;">
+		<div class="htmleaf-container" style = "padding: 0">
+			<div class="demo form-bg" style="padding: 20px 0;">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-offset-3 col-md-6">
+							<form method="POST" class="form-horizontal">
+								<!-- logo -->
 		                        <span class="heading">
-		                        	<img class="header-log" src="./image/Pack it.jpg" alt="Pack IT">
+		                        	<img class="header-log" src="../static/image/Pack it.jpg" alt="Pack IT">
 		                        </span>
-							<div class="form-group">
-								<input type="email" class="form-control" id="inputEmail3" placeholder="Username/Email">
-								<i class="fa fa-user"></i>
-							</div>
-							<div class="form-group help">
-								<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-								<i class="fa fa-lock"></i>
-								<a href="#" class="fa fa-question-circle"></a>
-							</div>
-							<div class="form-group">
-								<div class="main-checkbox">
-									<input type="checkbox" value="None" id="checkbox1" name="check"/>
-									<label for="checkbox1"></label>
+		                        <!-- user name -->
+								<div class="form-group">
+									<input type="text" class="form-control" id="inputEmail3" name="username" placeholder="Username/Email" required="required">
+									<i class="fa fa-user"></i>
 								</div>
-								<span class="text">Remember me</span>
-								<button type="submit" class="btn btn-default">SIGN IN</button>
-							</div>
-						</form>
+								<!-- password -->
+								<div class="form-group help">
+									<input type="password" class="form-control" id="inputPassword3" name="password" placeholder="Password" required="required">
+									<i class="fa fa-lock"></i>
+									<!-- <a href="#" class="fa fa-question-circle"></a> -->
+								</div>
+								<!-- checkbox and remember me -->
+								<div class="form-group">
+									<div class="main-checkbox">
+										<input type="checkbox" value="None" id="checkbox1" name="check"/>
+										<label for="checkbox1"></label>
+									</div>
+									<span class="text">Remember me</span>
+									<button type="submit" class="btn btn-default">SIGN IN</button>
+								</div>
+								<!-- create new account -->
+								<div class="form-group" style = "padding: 0 17%" id="signup">
+									<button type="button" value="go" class="btn btn-default" >CREATE YOUR PACKIT ACCOUNT</button>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<footer>
+			<footer>
 
-		</footer>
+			</footer>
+		</div>
 	</div>
-	
-</body>
-</html>
+
+<script>
+// function for signup page rederict
+	$(document).ready(function () {
+		$('#flashes-message').showTopbarMessage({ background: "#ECECEC", close: 2000 });
+		$("#signup").on("tap", function () {
+            window.location.href = "{{ url_for('signup') }}";
+        });
+	});
+
+</script>
+
+{% endblock %}
