@@ -116,9 +116,12 @@
 
 <script>
     $(document).ready(function(){
-        // $('.form-group .list-infor').on("tap", function () {
+        $('.form-group .list-infor').on("tap", function () {
 
-        // });
+            if($(this).data('href')){
+                location.href= $(this).data('href');
+            }
+        });
 
 
         $('.ui-list li,.ui-tiled li').click(function(){
