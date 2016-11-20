@@ -32,7 +32,7 @@
 									<span class="text">Remember me</span>
 									<button type="submit" class="btn btn-default">SIGN IN</button>
 								</div>
-								<div class="form-group" style = "padding: 0 17%">
+								<div class="form-group" style = "padding: 0 17%" id="signup">
 									<button type="button" value="go" class="btn btn-default" >CREATE YOUR PACKIT ACCOUNT</button>
 								</div>
 							</form>
@@ -49,6 +49,9 @@
 <script>
 	$(document).ready(function () {
 		$('#flashes-message').showTopbarMessage({ background: "#ECECEC", close: 2000 });
+		$("#signup").on("tap", function () {
+            window.location.href = "{{ url_for('signup') }}";
+        });
 	});
 
 </script>
