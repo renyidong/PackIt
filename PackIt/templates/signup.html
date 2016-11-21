@@ -10,7 +10,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-offset-3 col-md-6">
-                        <form method="POST" class="form-horizontal" id="signupform" onsubmit = "return validate();>
+                        <form method="POST" class="form-horizontal" id="signupform" onsubmit = "validate()">
                             <!-- logo and name -->
 		                        <span class="heading" style = "padding-bottom :0;">
 		                        	<img class="header-log" style ="height: 20%; width:  20%;" src="../static/image/Pack it.jpg" alt="Pack IT">
@@ -49,8 +49,8 @@
 </div>
 <script>
     function validate(){
-        var password = document.forms["signupform"]["inputPassword3"].value;
-        var passcheck = document.form["signupform"]["inputPassword4"].value;
+        var password = document.getElementById("inputPassword3").value;
+        var passcheck = document.getElementById("inputPassword4").value;
         if(password != passcheck){
             alert("Password not match");
             return false;
