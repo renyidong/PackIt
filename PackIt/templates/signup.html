@@ -10,7 +10,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-offset-3 col-md-6">
-                        <form method="POST" class="form-horizontal">
+                        <form method="POST" class="form-horizontal" id="signupform">
                             <!-- logo and name -->
 		                        <span class="heading" style = "padding-bottom :0;">
 		                        	<img class="header-log" style ="height: 20%; width:  20%;" src="../static/image/Pack it.jpg" alt="Pack IT">
@@ -35,7 +35,7 @@
                             </div>
                             <!-- submit botton -->
                             <div class="form-group">
-                                <button type="submit" class="btn btn-default">SIGN UP</button>
+                                <button type="submit" onsubmit = "return validate();" class="btn btn-default">SIGN UP</button>
                             </div>
                         </form>
                     </div>
@@ -47,5 +47,16 @@
         </footer>
     </div>
 </div>
+<script>
+    function validate(){
+        var password = document.forms["signupform"]["inputPassword3"].value;
+        var passcheck = document.form["signupform"]["inputPassword4"].value;
+        if(password != passcheck){
+            alert("Password not match");
+            return false;
+        }
+        return true;
+    }
+</script>
 
 {% endblock %}
