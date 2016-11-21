@@ -46,9 +46,9 @@ def item_put(item_id):
     if 'list_id' in request.form:
         i.list_id = request.form['list_id']
     if 'public' in request.form:
-        i.public = strtobool(request.form['list_id'])
-    if 'checked' in requset.form:
-        user_checked = strtobool(requset.form['checked'])
+        i.public = strtobool(request.form['public'])
+    if 'checked' in request.form:
+        user_checked = strtobool(request.form['checked'])
         db_checked = current_user in i.checked_by
         
         if user_checked and not db_checked:

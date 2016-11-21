@@ -21,6 +21,7 @@ def packing_list(list_id):
         packingList.append({
             'name': i.title,
             'id': i.id,
+            'public': i.public,
         })
     return render_template('packing.html', packingList=packingList, list_id=l.id)
 

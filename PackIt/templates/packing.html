@@ -44,10 +44,11 @@
                                             <input name="name" type="text" class="form-control category-item-detail" disabled value="{{ item['name'] }}">
                                             <span class="input-group-btn">
                                                 <button name="shareInfoButton" class="btn btn-lg btn-default category-item-info" type="button">
-                                                    <!--if public is true-->
+                                                    {% if item['public'] %}
                                                     <span name="public-item" class="fa fa-users"></span>
-                                                    <!--else -->
+                                                    {% else %}
                                                     <span name="private-item" class="fa fa-user"></span>
+                                                    {% endif %}
                                                 </button>
                                             </span>
                                         </div>
