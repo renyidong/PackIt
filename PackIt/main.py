@@ -9,7 +9,7 @@ from .database import ItemList
 @login_required
 def home():
     packingListSet = []
-    for lst in ItemList.query.filter_by(owner_id=current_user.id):
+    for lst in ItemList.query.filter_by(owner=current_user):
         packingListSet.append({
             'id': lst.id,
             'name': lst.event.title,
