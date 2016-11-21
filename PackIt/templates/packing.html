@@ -244,7 +244,7 @@
             $('#ModifyItemDetail').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget); // Button that triggered the modal
                 var itemName = button.data('itemname'); // Extract info from data-* attributes
-                var itemID = button.data('itemID');
+                var itemID = button.data('itemid');
                 var modal = $(this);
                 modal.find('.modal-body #edit-item-name').val(itemName);
                 modal.find('.modal-body #edit-item-id').val(itemID);
