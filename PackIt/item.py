@@ -13,7 +13,7 @@ from .database import db, Item
 def item_new():
     """Create a new item, return id of new item"""
     title = request.form['name']
-    category = request.form['category_name']
+    category = request.form.get('category_name')
     owner_id = current_user.id
     list_id = request.form['list_id']
 
