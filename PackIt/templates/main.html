@@ -5,11 +5,11 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <div class="col-xs-2 btn" style="text-align: center;margin-top: 3px"><span class="h3">Edit</span></div>
+                    <div class="col-xs-2 btn" style="text-align: center;margin-top: 3px"></div>
                     <div class="col-xs-8" style="text-align: center;margin-top: 10px">
                         <span class="h3">Pack IT</span>
                     </div>
-                    <div class="col-xs-2">
+                    <div class="col-xs-2" style="padding-top: 5px;">
                         <button class="btn btn-link fa fa-plus fa-2x pull-right" data-toggle="modal" data-target="#createNewEventPop"></button>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
         <ul class="list-group">
             {% for oneList in packingListSet %}
             <li class="list-group-item">
-                <div class="row list-group">
+                <div class="row form-group">
                     <div class="container-fluid">
                         <div class="col-xs-10 list-infor">
                             <!-- Redirect to url_for('packing_list', list_id=oneList['id']) -->
@@ -46,7 +46,7 @@
                             <div><span>{{ oneList['name'] }}</span></div>
                             <div><span>{{ oneList['remindTime'] }}</span></div>
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-xs-2" style="padding-top: 15px;">
                             <span><i class="fa fa-check fa-2x" style="display: none"></i></span>
                             <span><i class="fa fa-clock-o fa-2x" style="display: block"></i></span>
                         </div>
@@ -55,31 +55,6 @@
             </li>
             {% endfor %}
         </ul>
-    </div>
-
-    <div data-role="footer" class="jqm-footer ui-footer">
-        <nav class="navbar navbar-default navbar-fixed-bottom">
-            <div class="container" id="Plan">
-                <div class="navbar-header" style="padding-top: 10px;">
-                    <div class="col-xs-3 active">
-                        <div class="col-xs-12" style="text-align: center"><span class="fa fa-suitcase fa-2x"></span></div>
-                        <div class="col-xs-12" style="text-align: center"><span>Plan</span></div>
-                    </div>
-                    <div class="col-xs-3" id="friend">
-                        <div class="col-xs-12" style="text-align: center"><span class="fa fa-calendar-check-o fa-2x"></span></div>
-                        <div class="col-xs-12" style="text-align: center"><span>Check</span></div>
-                    </div>
-                    <div class="col-xs-3">
-                        <div class="col-xs-12" style="text-align: center"><a style = "text-decoration: none; color:#000000" href={{ url_for('friend')}}><span class="fa fa-address-book fa-2x"></span></a></div>
-                        <div class="col-xs-12" style="text-align: center"><a style = "text-decoration: none; color:#000000; font-weight:normal" href={{ url_for('friend')}}><span>Friends</span></a></div>
-                    </div>
-                    <div class="col-xs-3">
-                        <div class="col-xs-12" style="text-align: center"><span class="fa fa-cog fa-2x"></span></div>
-                        <div class="col-xs-12" style="text-align: center"><span>Setting</span></div>
-                    </div>
-                </div>
-            </div>
-        </nav>
     </div>
 
 </div>
