@@ -263,7 +263,7 @@ li[class*="col-"] > .square-responsive{
 .jqm-demos .jqm-content > p {
     margin: 0 0 1.25em;
 }
-.jqm-demos .jqm-content > ul,
+/*.jqm-demos .jqm-content > ul,*/
 .jqm-demos .jqm-content > ol {
     padding-left: 1.3em;
 }
@@ -289,14 +289,28 @@ li[class*="col-"] > .square-responsive{
     background-color: #ffffff;
     padding-left: 15px
 }
-.jqm-demos .jqm-content .category .category-item{
-    border-bottom: 1px solid #eee;
-}
+/*.jqm-demos .jqm-content .category .category-item{*/
+    /*border-bottom: 1px solid #eee;*/
+/*}*/
 .jqm-demos .jqm-content .category .category-item .category-item-check,
 .jqm-demos .jqm-content .category .category-item .category-item-detail,
 .jqm-demos .jqm-content .category .category-item .category-item-info{
     background-color: #ffffff;
     border: none;
+}
+.jqm-demos .jqm-content .category .category-item .category-item-detail{
+    height: 50px;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 0px;
+}
+.jqm-demos .jqm-content .category .category-item .category-item-info{
+    height: 50px;
+    width: 68px;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 0px;
 }
 
 /* Homepage */
@@ -898,4 +912,59 @@ li[class*="col-"] > .square-responsive{
     background-color: #3399ff;
     color: #fff;
     text-shadow: none;
+}
+
+/*displaying items*/
+.category.form-group{
+    margin-bottom: 0px;
+}
+.jqm-demos .jqm-content .category.selected .container-fluid,
+.jqm-demos .jqm-content .category.selected .category-item,
+.jqm-demos .jqm-content .category.selected .category-item .category-item-check,
+.jqm-demos .jqm-content .category.selected .category-item .category-item-detail,
+.jqm-demos .jqm-content .category.selected .category-item .category-item-info{
+    background-color: #00aeef;
+}
+.category-list{
+    padding-left: 0;
+}
+.category-list .list-group-item{
+    padding: 0;
+}
+.category-list .list-group-item .ui-btn{
+    padding: 15px 8px;
+}
+.category-list .category-item-info{
+    padding: 7px 12px;
+}
+.behind {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.behind a.ui-btn {
+    width: 68px;
+    margin: 0px;
+    float: right;
+    border: none;
+}
+.behind a.delete-btn, .behind a.delete-btn:active, .behind a.delete-btn:visited, .behind a.delete-btn:focus, .behind a.delete-btn:hover {
+    color: white;
+    background-color: red;
+    text-shadow: none;
+}
+.behind a.ui-btn.pull-left {
+    float: left;
+}
+.behind a.edit-btn, .behind a.edit-btn:active, .behind a.edit-btn:visited, .behind a.edit-btn:focus, .behind a.edit-btn:hover {
+    color: white;
+    background-color: orange;
+    text-shadow: none;
+}
+.checked-already .packed-header{
+    padding: 5px 15px;
+    font-size: 18px;
+    font-weight: bold;
 }

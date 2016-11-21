@@ -1,36 +1,40 @@
 {% extends "base.html" %}
 {% block body %}
 
-<div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-footer-fixed ui-page-active" id="new-event-page">
-    <div data-role="header" class="jqm-header ui-header" role="banner">
-        <h2 class="ui-header" role="heading">Pack IT</h2>
-    </div>
-    <div data-role="main" class="ui-content jqm-content" style="background-color: #00ffff">
-        <form method="post" action="" class="form-horizontal form-inline" role="form">
-            <fieldset>
+<form method="post" class="form-horizontal form-inline" role="form">
+    <fieldset>
+        <div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-footer-fixed ui-page-active" id="new-event-page">
+            <div data-role="header" class="jqm-header ui-header" role="banner">
+                <h2 class="ui-header" role="heading">Pack IT</h2>
+            </div>
+            <div data-role="main" class="ui-content jqm-content" style="background-color: #00B4EF">
                 <div class="form-group" style="text-align: center">
                     <h4>New Event</h4>
                 </div>
+                <!--Event Name-->
+                <div class="form-group">
+                    <input id="eventName" name="eventName" type="text" placeholder="Input event name" class="input-xlarge form-control">
+                </div>
                 <!--Destination-->
                 <div class="form-group">
-                    <input type="text" placeholder="Input your destination" class="input-xlarge form-control">
+                    <input id="destination" name="destination" type="text" placeholder="Input your destination" class="input-xlarge form-control">
                 </div>
                 <div class="form-group row">
                     <div class="controls">
-                        <input id="datetimepicker" class="span2 form-control" data-date-format="mm-dd-yyyy" size="16" type="text" value="11-02-2016" >
+                        <input id="datetimepicker" name="departureDate" class="span2 form-control" data-date-format="mm-dd-yyyy" size="16" type="text" value="11-02-2016" >
                         <span class="add-on"><i class="icon-th"></i></span>
                     </div>
-                    <label class="control-label">
-                        Length of Stay:
+                    <label class="control-label" style="color: #ffffff">
+                        &nbsp;&nbsp;Length of Stay:
                         <span id="currentStayLength">5</span>
                     </label>
                     <div style="padding-left: 0px;margin-right: 0px;">
-                        <input id="lengthOfStay" class="col-xs-6" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="5"/>
+                        <input id="lengthOfStay" name="lengthOfStay" class="col-xs-6" data-slider-id='ex1Slider' type="text" data-slider-min="0" data-slider-max="20" data-slider-step="1" data-slider-value="5"/>
                     </div>
                 </div>
                 <div class="form-group" >
                     <div class="controls">
-                        <select class="input-xlarge form-control">
+                        <select name="luggageSize" class="input-xlarge form-control">
                             <option>Select Luggage Size</option>
                             <option>Backpack</option>
                             <option>Small</option>
@@ -43,7 +47,7 @@
                     <label class="col-xs-5 control-label">Display Quantity</label>
                     <div class="col-xs-7 controls" style="text-align: right">
                         <div class="switch" tabindex="0">
-                            <input id="displayQuantity" type="checkbox" />
+                            <input id="displayQuantity" name="displayQuantity" type="checkbox" />
                         </div>
                     </div>
                 </div>
@@ -52,7 +56,7 @@
                     <label class="col-xs-5 control-label">Reminder</label>
                     <div class="col-xs-7 controls" style="text-align: right">
                         <div class="switch" tabindex="0">
-                            <input id="remindMe" type="checkbox" />
+                            <input id="remindMe" name="remindMe" type="checkbox" />
                         </div>
                     </div>
 
@@ -60,24 +64,217 @@
 
                 <div id="remindTimeSelectPanel" class="form-group" style="display: none; background-color: #ffffff;margin-bottom: 1px;">
                     <div class="controls">
-                        <input id="remindTimePicker" class="span2 form-control" data-date-format="mm-dd-yyyy hh:ii" size="16" type="text" value="" placeholder="Select Remind Time" >
+                        <input id="remindTimePicker" name="remindTimePicker" class="span2 form-control" data-date-format="mm-dd-yyyy hh:ii" size="16" type="text" value="" placeholder="Select Remind Time" >
                         <span class="add-on"><i class="icon-th"></i></span>
                     </div>
                 </div>
 
                 <div class="form-group" style="margin-top: 14px;">
                     <div class="col-xs-offset-4 controls">
-                        <button type="submit" class="btn btn-default" id="selectActivitySubmit">Select Activities</button>
+                        <a type="botton" class="btn btn-default" id="selectActivitySubmit">Select Activities</a>
                     </div>
                 </div>
 
-            </fieldset>
-        </form>
-    </div>
-</div>
+            </div>
+        </div>
+
+        <div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-footer-fixed" id="activity-page">
+            <div data-role="header" class="jqm-header ui-header" role="banner">
+                <nav class="navbar navbar-default navbar-fixed-top">
+                    <div class="container">
+                        <div class="col-xs-2"><a class="fa fa-chevron-left fa-2x pull-left" id="back" style="margin: 10px;"></a></div>
+                        <div class="navbar-header">
+                            <h3 class="ui-header" role="heading">Select Activity</h3>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div role="main" class="ui-content jqm-content container-fluid" style="background-color: #00B4EF;margin-top: 50px;">
+                <div class="row form-group">
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Sports" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-futbol-o fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Sports</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Swimming" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-life-ring fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Swimming</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Bicycling" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-bicycle fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Bicycling</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Conference" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-user-circle fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Conference</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Snow Sports" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-snowflake-o fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Snow Sports</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Party" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-glass fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Party</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Fancy Dinner" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-cutlery fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Fancy Dinner</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Working" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-desktop fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Working</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="square-responsive">
+                            <input class="square-input" type="checkbox" value="Shopping" style="display: none;">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-shopping-bag fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Shopping</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ui-grid-b form-group" style="border-bottom: 3px solid #ffffff; padding-left: 15px;">
+                    <span style="color: #ffffff;">Customize</span>
+                </div>
+
+                <div class="row form-group">
+                    <div class="col-xs-4">
+                        <div class="square-responsive-custome">
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div>
+                                        <span class="fa fa-plus fa-2x"></span>
+                                    </div>
+                                    <div style="margin-top: 20%;">
+                                        <span>Customize</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div data-role="footer" class="jqm-footer ui-footer ui-bar-inherit ui-footer-fixed slideup">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-block btn-default" id="beginPackingSubmit">Begin Packing</button>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>
 
 <script>
     $(document).ready(function(){
+
+        $("#selectActivitySubmit").on("tap", function() {
+            $("#new-event-page").toggleClass("ui-page-active");
+            $("#activity-page").toggleClass("ui-page-active");
+        });
+
+        $("#back").on("tap", function() {
+            $("#new-event-page").toggleClass("ui-page-active");
+            $("#activity-page").toggleClass("ui-page-active");
+        });
 
         var mySlider = $("#lengthOfStay").bootstrapSlider();
         //var slider = new Slider('#lengthOfStay', {});
@@ -103,12 +300,9 @@
                 $('#remindTimeSelectPanel').css('display','none');
             }
         });
-        $("#selectActivitySubmit").on("tap", function(){
-           window.location.href = "{{ url_for('set_activity') }}";
-        });
 
         $("#remindPlus").on("tap", function () {
-           var current = $("#remindTimeInput").val();
+            var current = $("#remindTimeInput").val();
             current += 1;
             $("#remindTimeInput").val(current);
             $("#remindTimeLabel").text(current);
@@ -119,6 +313,16 @@
             if(current < 0) current = 0;
             $("#remindTimeInput").val(current);
             $("#remindTimeLabel").text(current);
+        });
+        $('.square-responsive').on('tap', function () {
+            $(this).toggleClass('red');
+            //$('.square-responsive .square-input').each(function(){this.checked = !this.checked;});
+            if($(this).find("input").attr('checked')){
+                $(this).find("input").removeAttr('checked');
+            }else{
+                $(this).find("input").attr('checked','checked');
+            }
+
         });
     });
 </script>

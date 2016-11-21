@@ -11,14 +11,14 @@
     <link rel="stylesheet" href="/static/plugins/bootstrap-slider/css/bootstrap-slider.min.css">
     <link rel="stylesheet" href="/static/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.css">
     <link rel="stylesheet" href="/static/css/font-awesome.min.css">
-    <script src="http://code.jquery.com/jquery-3.1.1.js"></script>
+    <script src="/static/js/jquery-3.1.1.min.js"></script>
     <script src="/static/js/jquery.mobile-1.4.5.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/jquery.topbar.js"></script>
     <script src="/static/plugins/bootstrap-slider/js/bootstrap-slider.min.js"></script>
     <script src="/static/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
     <script src="/static/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/static/js/zepto.min.js"></script>
-    <script src="/static/js/frozen.js"></script>
     {% block more_head %}{% endblock %}
     
 </head>
@@ -28,11 +28,13 @@
     </div>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
-    <ul class=flashes>
+    <div id="flashes-message" style="display: none;">
+        <ul class="list-unstyled">
         {% for message in messages %}
             <li>{{ message }}</li>
         {% endfor %}
         </ul>
+    </div>
     {% endif %}
     {% endwith %}
     
