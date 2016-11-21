@@ -153,8 +153,8 @@ def drop_db():
 
 @app.cli.command()
 def inject_test_data():
-    drop_db()
-    init_db()
+    db.drop_all()
+    db.create_all()
     user = User.new('test_user', 'test@example.com', 'password')
     user.id = 'urn:uuid:12345678-1234-5678-1234-567812345678'
     db.session.add(user)
