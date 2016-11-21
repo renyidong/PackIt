@@ -71,32 +71,32 @@
                         {% for item in packingList %}
                             {% if item['checked'] %}
                                 <li class="list-group-item">
-                            <form method="post" action="{{url_for('item_del_uni')}}" id="itemInforDetailForm">
-                                <div class="behind">
-                                    <a href="#" class="ui-btn delete-btn">Delete</a>
-                                    <a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal" 
-                                       data-target="#ModifyItemDetail" data-itemID="{{ item['id'] }}" data-itemName="{{ item['name'] }}">Edit</a>
-                                </div>
-                                <div class="row form-group category">
-                                    <div class="container-fluid">
-                                        <div class="input-group category-item">
-                                            <!--<span class="input-group-addon category-item-check"><input type="checkbox"></span>-->
-                                            <input name="id" type="hidden" value="{{ item['id'] }}">
-                                            <input name="name" type="text" class="form-control category-item-detail" disabled value="{{ item['name'] }}">
-                                            <span class="input-group-btn">
-                                                <button name="shareInfoButton" class="btn btn-lg btn-default category-item-info" type="button">
-                                                    {% if item['public'] %}
-                                                    <span name="public-item" class="fa fa-users"></span>
-                                                    {% else %}
-                                                    <span name="private-item" class="fa fa-user"></span>
-                                                    {% endif %}
-                                                </button>
-                                            </span>
+                                    <form method="post" action="{{url_for('item_del_uni')}}" id="itemInforDetailForm">
+                                        <div class="behind">
+                                            <a href="#" class="ui-btn delete-btn">Delete</a>
+                                            <a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal" 
+                                               data-target="#ModifyItemDetail" data-itemID="{{ item['id'] }}" data-itemName="{{ item['name'] }}">Edit</a>
                                         </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </li>
+                                        <div class="row form-group category">
+                                            <div class="container-fluid">
+                                                <div class="input-group category-item">
+                                                    <!--<span class="input-group-addon category-item-check"><input type="checkbox"></span>-->
+                                                    <input name="id" type="hidden" value="{{ item['id'] }}">
+                                                    <input name="name" type="text" class="form-control category-item-detail" disabled value="{{ item['name'] }}">
+                                                    <span class="input-group-btn">
+                                                        <button name="shareInfoButton" class="btn btn-lg btn-default category-item-info" type="button">
+                                                            {% if item['public'] %}
+                                                            <span name="public-item" class="fa fa-users"></span>
+                                                            {% else %}
+                                                            <span name="private-item" class="fa fa-user"></span>
+                                                            {% endif %}
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </li>
                             {% endif %}
                         {% endfor %}
                     </ul>
@@ -134,7 +134,7 @@
                         </div>
                     </div>
                     <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary" id="packedButtonSubmit">Pack All</button>
+                        <a type="button" href="{{url_for('home')}}" class="btn btn-success" style="color: #ffffff;">Save Now</a>
                     </div>
                 </div>
             </div>
@@ -309,7 +309,8 @@
                                 data: 'public=false',
                                 type: 'PUT',
                                 success: function(){
-                                    showItemInfo.toggleClass("fa-user");
+                                    showItemInfo.removeClass("fa-users");
+                                    showItemInfo.addClass("fa-user");
                                     showItemInfo.attr("name","private-item");
                                 },
                                 error: function(){
@@ -322,7 +323,8 @@
                                 data: 'public=true',
                                 type: 'PUT',
                                 success: function(){
-                                    showItemInfo.toggleClass("fa-users");
+                                    showItemInfo.removeClass("fa-user");
+                                    showItemInfo.addClass("fa-users");
                                     showItemInfo.attr("name","public-item");
                                 },
                                 error: function(){
@@ -331,39 +333,36 @@
                             });
                         }
                     });
-                    $('#to_check_list .category-item-detail').on('tap', function(){
+                    $('.category-item-detail').on('tap', function(){
                         var itemID = $(this).prev().val();
-                        $.ajax({
-                            url: '/item/' + itemID,
-                            data: 'checked=true',
-                            type: 'PUT',
-                            success: function(){
-                                alert("!!!");
-                                $(this).parent().parent().parent().parent().parent().toggleClass("checked-already");
-                                var packed = $(this).parent().parent().parent().parent().parent();
-                                $("#checked_list").append(packed);
-                            },
-                            error: function(){
-                                alert("????");
-                            }
-                        })
-                    });
-                    $('#checked_list .category-item-detail').on('tap', function(){
-                        var itemID = $(this).prev().val();
-                        alert(itemID);
-                        $.ajax({
-                            url: '/item/' + itemID,
-                            data: 'checked=false',
-                            type: 'PUT',
-                            success: function(){
-                                $(this).parent().parent().parent().parent().parent().toggleClass("checked-already");
-                                var packed = $(this).parent().parent().parent().parent().parent();
-                                $("#to_check_list").append(packed);
-                            },
-                            error: function(){
-                                
-                            }
-                        })
+                        var target = $(this).parents().closest(".list-group-item");
+                        if(target.hasClass("checked-already")){
+                            $.ajax({
+                                url: '/item/' + itemID,
+                                data: 'checked=false',
+                                type: 'PUT',
+                                success: function(){
+                                    target.removeClass("checked-already");
+                                    $("#to_check_list").append(target);
+                                },
+                                error: function(){
+                                    alert("Error");
+                                }
+                            })
+                        }else{
+                            $.ajax({
+                                url: '/item/' + itemID,
+                                data: 'checked=true',
+                                type: 'PUT',
+                                success: function(){
+                                    target.addClass("checked-already");
+                                    $("#checked_list").append(target);
+                                },
+                                error: function(){
+                                    alert("Error");
+                                }
+                            })
+                        }
                     });
             
             function createNewItem(itemName){
