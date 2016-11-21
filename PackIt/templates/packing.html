@@ -2,9 +2,6 @@
 {% block more_head %}
 <link rel="stylesheet" href="/static/plugins/iCheck/css/flat/red.css">
 <script src="/static/plugins/iCheck/js/icheck.min.js"></script>
-<script src="/static/js/demo.js"></script>
-<!--<script src="/static/js/jquery.google.fastbutton.js"></script>-->
-<!--<script src="/static/js/google.fastbutton.js"></script>-->
 {% endblock %}
 {% block body %}
 <div data-role="page" class="jqm-demos jqm-home ui-page ui-page-theme-a ui-page-footer-fixed ui-page-active" id="choosing-page">
@@ -33,7 +30,7 @@
                     <ul class="list-group category-list" id="to_check_list">
                         {% for item in packingList %}
                         <li class="list-group-item">
-                            <form method="post" target="{{url_for('item_del_uni')}}" id="itemInforDetailForm">
+                            <form method="post" action="{{url_for('item_del_uni')}}" id="itemInforDetailForm">
                                 <div class="behind">
                                     <a href="#" class="ui-btn delete-btn">Delete</a>
                                     <a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal" 
@@ -46,8 +43,11 @@
                                             <input name="id" type="hidden" value="{{ item['id'] }}">
                                             <input name="name" type="text" class="form-control category-item-detail" disabled value="{{ item['name'] }}">
                                             <span class="input-group-btn">
-                                                <button class="btn btn-lg btn-default category-item-info" type="button">
-                                                    <span class="fa fa-user"></span>
+                                                <button name="shareInfoButton" class="btn btn-lg btn-default category-item-info" type="button">
+                                                    <!--if public is true-->
+                                                    <span name="public-item" class="fa fa-users"></span>
+                                                    <!--else -->
+                                                    <span name="private-item" class="fa fa-user"></span>
                                                 </button>
                                             </span>
                                         </div>
@@ -117,7 +117,7 @@
                 </button>
                 <h4 class="modal-title" id="addNewItemModelLabel">Create New Item</h4>
             </div>
-            <form method="post" target="{{url_for('item_new')}}" class="form-horizontal" id="addNewItemModelForm">
+            <form method="post" action="{{url_for('item_new')}}" class="form-horizontal" id="addNewItemModelForm">
                 <div class="modal-body">
                     <div class="">
                         <label for="new-item-name" class="form-control-label">Item Name:</label>
@@ -147,7 +147,7 @@
                 </button>
                 <h4 class="modal-title" id="itemDetailLabel">Edit Item</h4>
             </div>
-            <form method="post" target="{{url_for('item_put_uni')}}" class="form-horizontal" id="modifyItemModalForm">
+            <form method="post" action="{{url_for('item_put_uni')}}" class="form-horizontal" id="modifyItemModalForm">
                 <div class="modal-body">
                     <div class="">
                         <label for="item-name" class="form-control-label">Item Name:</label>
@@ -162,7 +162,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="editItemButton">Add</button>
+                    <button type="submit" class="btn btn-primary" id="editItemButton">Add</button>
                 </div>
             </form>
         </div>
@@ -205,19 +205,6 @@
                 modal.find('.modal-body #edit-item-name').val(itemName);
                 modal.find('.modal-body #edit-item-id').val(itemID);
             });
-            $(".category-item-info").on("tap", function() {
-                $(this).find("span").toggleClass("fa-user");
-                $(this).find("span").toggleClass("fa-users");
-            });
-            $('.category-item input[name="name"]').on('tap', function(){
-                $(this).parent().parent().parent().parent().toggleClass("checked-already");
-                var packed = $(this).parent().parent().parent().parent();
-                if(packed.hasClass("checked-already")){
-                    packed.appendTo("#checked_list");
-                }else{
-                    packed.appendTo("#to_check_list");
-                }
-            });
 
             // add new item event
             $("#addNewItemButton").on("tap", function() {
@@ -234,35 +221,10 @@
                     $("#new-item-name").popover('show');
                 }
             });
-            $("#editItemButton").on("tap",function () {
-                var itemName = $("#item-name").val();
-                var categoryName = $("#category-name").val();
-                if( itemName != "") {
-                    $("#modifyItemModalForm").submit();
-                }else{
-                    $("#item-name").popover('show');
-                }
-            });
-            $("packedButtonSubmit").on("tap", function() {
+            $("#packedButtonSubmit").on("tap", function() {
                $("#itemSelectForm").submit(); 
             });
-            
-            function createNewItem(itemName){
-                var newItem = '<li class="list-group-item">';
-                    newItem += '<div class="behind"><a href="#" class="ui-btn delete-btn">Delete</a>';
-                    newItem += '<a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal" data-target="#itemDetail" data-itemName="' + itemName + '">Edit</a>';
-                    newItem += '</div>';
-                    newItem += '<div class="row form-group category" >';
-                    newItem += '<div class="container-fluid">';
-                    newItem += '<div class="input-group category-item">';
-                    newItem += '<input type="text" class="form-control category-item-detail" disabled value="' + itemName + '">';
-                    newItem += '<span class="input-group-btn">';
-                    newItem += '<button class="btn btn-default category-item-info" type="button">';
-                    newItem += '<span class="fa fa-user"></span></button></span></div></div></div>';
-                return newItem;
-            }
-            function listOperation(){
-                function prevent_default(e) {
+                    function prevent_default(e) {
                         e.preventDefault();
                     }
                     function disable_scroll() {
@@ -274,7 +236,6 @@
                     var x;
                     $('.category-item')
                             .on('touchstart', function(e) {
-                                console.log(e.originalEvent.pageX)
                                 $('.category-item.open').css('left', '0px').removeClass('open') // close em all
                                 $(e.currentTarget).addClass('open')
                                 x = e.originalEvent.targetTouches[0].pageX // anchor point
@@ -300,25 +261,86 @@
                                 enable_scroll()
                             });
                     $("li .delete-btn").on("touchend", function (e) {
-                        e.preventDefault()
-                        // $(this).parents('li').slideUp('fast', function() {
-                        //     $(this).remove()
-                        // })
+                        e.preventDefault();
                         $("#itemInforDetailForm").submit();
                     });
                     $(".category-item-info").on("tap", function() {
-                        $(this).find("span").toggleClass("fa-user");
-                        $(this).find("span").toggleClass("fa-users");
-                    });
-                    $('input').on('tap', function(){
-                        $(this).parent().parent().parent().parent().toggleClass("checked-already");
-                        var packed = $(this).parent().parent().parent().parent();
-                        if(packed.hasClass("checked-already")){
-                            packed.appendTo("#checked_list");
-                        }else{
-                            packed.appendTo("#to_check_list");
+                        var itemID = $(this).parent().prev().prev().val();
+                        var shareInfo = $(this).find("span").attr("name");
+                        if(shareInfo == "public-item"){ //public item now,change to private
+                            $.ajax({
+                                url: '/item/' + itemID,
+                                data: 'public=false',
+                                type: 'PUT',
+                                success: function(){
+                                    $(this).html('<span name="private-item" class="fa fa-user"></span>');
+                                },
+                                error: function(){
+                                    
+                                }
+                            });
+                        }else{ //private item now,change to public
+                            $.ajax({
+                                url: '/item/' + itemID,
+                                data: 'public=true',
+                                type: 'PUT',
+                                success: function(){
+                                    $(this).html('<span name="public-item" class="fa fa-users"></span>');
+                                },
+                                error: function(){
+                                    
+                                }
+                            });
                         }
                     });
+                    $('#to_check_list .category-item-detail').on('tap', function(){
+                        var itemID = $(this).prev().val();
+                        alert(itemID);
+                        $.ajax({
+                            url: '/item/' + itemID,
+                            data: 'checked=true',
+                            type: 'PUT',
+                            success: function(){
+                                $(this).parent().parent().parent().parent().parent().toggleClass("checked-already");
+                                var packed = $(this).parent().parent().parent().parent().parent();
+                                $("#checked_list").append(packed);
+                            },
+                            error: function(){
+                                
+                            }
+                        })
+                    });
+                    $('#checked_list .category-item-detail').on('tap', function(){
+                        var itemID = $(this).prev().val();
+                        alert(itemID);
+                        $.ajax({
+                            url: '/item/' + itemID,
+                            data: 'checked=false',
+                            type: 'PUT',
+                            success: function(){
+                                $(this).parent().parent().parent().parent().parent().toggleClass("checked-already");
+                                var packed = $(this).parent().parent().parent().parent().parent();
+                                $("#to_check_list").append(packed);
+                            },
+                            error: function(){
+                                
+                            }
+                        })
+                    });
+            
+            function createNewItem(itemName){
+                var newItem = '<li class="list-group-item">';
+                    newItem += '<div class="behind"><a href="#" class="ui-btn delete-btn">Delete</a>';
+                    newItem += '<a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal" data-target="#itemDetail" data-itemName="' + itemName + '">Edit</a>';
+                    newItem += '</div>';
+                    newItem += '<div class="row form-group category" >';
+                    newItem += '<div class="container-fluid">';
+                    newItem += '<div class="input-group category-item">';
+                    newItem += '<input type="text" class="form-control category-item-detail" disabled value="' + itemName + '">';
+                    newItem += '<span class="input-group-btn">';
+                    newItem += '<button class="btn btn-default category-item-info" type="button">';
+                    newItem += '<span class="fa fa-user"></span></button></span></div></div></div>';
+                return newItem;
             }
 
         });
