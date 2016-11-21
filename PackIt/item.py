@@ -73,19 +73,19 @@ def item_del(item_id):
 def item_new_uni():
     """Create item given a browser form."""
     item_new()
-    return redirect(request.headers['Referrer'])
+    return redirect(request.headers['Referer'])
     
 @app.route("/item/put", methods=["POST"])
 @login_required
 def item_put_uni():
     """Update item given a browser form."""
     item_put(item_id = request.form['id'])
-    return redirect(request.headers['Referrer'])
+    return redirect(request.headers['Referer'])
     
 @app.route("/item/del", methods=["POST"])
 @login_required
 def item_del_uni():
     """Delete item given a browser form."""
     item_del(item_id = request.form['id'])
-    return redirect(request.headers['Referrer'])
+    return redirect(request.headers['Referer'])
     
