@@ -9,10 +9,8 @@ from .database import ItemList
 @app.route("/list/<list_id>", methods=['GET'])
 @login_required
 def packing_list(list_id):
-    l = ItemList.query.get(list_id)
+    l = ItemList.query.get_or_404(list_id)
     
-    if l is None:
-        raise NotFound
     if l.owner_id != current_user.id:
         raise Forbidden
     
@@ -24,6 +22,7 @@ def packing_list(list_id):
             'public': i.public,
             'checked' : current_user in i.checked_by,
         })
+        print(packingList)
     return render_template('packing.html', packingList=packingList, list_id=l.id)
 
 @app.route("/list/<list_id>", methods=['POST'])

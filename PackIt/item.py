@@ -8,20 +8,16 @@ from . import app
 from .database import db, Item
 
 
-# create new 
 @app.route("/item", methods=["POST"])
 @login_required
 def item_new():
     """Create a new item, return id of new item"""
-    try:
-        title = request.form['name']
-        category = request.form['category_name']
-        owner_id = current_user.id
-        list_id = request.form['list_id']
-    except KeyError as e:
-        raise BadRequest(e)
-    
-    i = Item.new(title, category, owner_id, list_id, activity_id=None, public=False)
+    title = request.form['name']
+    category = request.form['category_name']
+    owner_id = current_user.id
+    list_id = request.form['list_id']
+
+    i = Item.new(title, category, owner_id, list_id)
     
     db.session.add(i)
     db.session.commit()
@@ -32,10 +28,8 @@ def item_new():
 def item_put(item_id):
     """Update item information.
     All properties are optional, only specified properties are updated."""
-    i = Item.query.get(item_id)
+    i = Item.query.get_or_404(item_id)
     
-    if i is None:
-        raise NotFound
     if i.owner_id != current_user.id:
         raise Forbidden
     
@@ -64,10 +58,8 @@ def item_put(item_id):
 @login_required
 def item_del(item_id):
     """Delete an item all list. current _user must be owner of the item."""
-    i = Item.query.get(item_id)
+    i = Item.query.get_or_404(item_id)
     
-    if i is None:
-        raise NotFound
     if i.owner_id != current_user.id:
         raise Forbidden
     
@@ -81,19 +73,19 @@ def item_del(item_id):
 def item_new_uni():
     """Create item given a browser form."""
     item_new()
-    return redirect(url_for('packing_list'), list_id=request.form['list_id'])
+    return redirect(url_for('packing_list', list_id=request.form['list_id']))
     
 @app.route("/item/put", methods=["POST"])
 @login_required
 def item_put_uni():
     """Update item given a browser form."""
     item_put(item_id = request.form['id'])
-    return redirect(url_for('packing_list'), list_id=request.form['list_id'])
+    return redirect(url_for('packing_list', list_id=request.form['list_id']))
     
 @app.route("/item/del", methods=["POST"])
 @login_required
 def item_del_uni():
     """Delete item given a browser form."""
     item_del(item_id = request.form['id'])
-    return redirect(url_for('packing_list'), list_id=request.form['list_id'])
+    return redirect(url_for('packing_list', list_id=request.form['list_id']))
     
