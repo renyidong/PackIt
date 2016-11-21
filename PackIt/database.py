@@ -49,13 +49,13 @@ class User(db.Model):
     __tablename__ = 'user'
     
     @classmethod
-    def new(cls, username, email, password):
+    def new(cls, username, email, password, is_active=True):
         u = cls()
         u.id = UUID.new_random()
         u.username = username
         u.email = email
         u.password = password
-        u.is_active = True
+        u.is_active = is_active
         return u
     
     id = Column(UUID, primary_key=True)
@@ -111,6 +111,15 @@ class ItemList(db.Model):
     owner = relationship('User', uselist=False)
     items = relationship('Item', back_populates='list', uselist=True)
     
+    @classmethod
+    def new(cls, title, event, owner):
+        l = cls()
+        l.id = UUID.new_random()
+        l.title = title
+        l.event = event
+        l.owner = owner
+        return l
+    
     
 class Item(db.Model):
     __tablename__ = 'item'
@@ -127,12 +136,12 @@ class Item(db.Model):
     checked_by = relationship("User", secondary='checked', uselist=True)
     
     @classmethod
-    def new(cls, title, category, owner_id, list_id, activity_id=None, public=False):
+    def new(cls, title, category, owner, list, activity=None, public=False):
         i = cls()
         i.id = UUID.new_random()
         i.title = title
-        i.owner_id = owner_id
-        i.list_id = list_id
+        i.owner = owner
+        i.list = list
         #i.activity_id = activity_id
         i.public = public
         return i

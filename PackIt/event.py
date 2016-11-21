@@ -27,13 +27,11 @@ def post_new_event():
     e.end = e.begin + timedelta(days=int(request.form['lengthOfStay']))
     if request.form.get('remindTimePicker'):
         e.remind_at = datetime.strptime(request.form['remindTimePicker'], '%m-%d-%Y %H:%M')
-    e.owner_id = current_user.id
+    e.owner = current_user
     db.session.add(e)
     db.session.commit()
     
-    l = ItemList()
-    l.id = uuid.uuid4()
-    l.event_id = e.id
+    l = ItemList.new("", e, current_user)
     db.session.add(l)
     db.session.commit()
     return redirect(url_for('packing_list',list_id=l.id))

@@ -11,7 +11,7 @@ from .database import ItemList
 def packing_list(list_id):
     l = ItemList.query.get_or_404(list_id)
     
-    if l.owner_id != current_user.id:
+    if l.owner != current_user:
         raise Forbidden
     
     packingList = []
@@ -36,7 +36,7 @@ def del_list(list_id):
     """Delete a list. current _user must be owner of the item."""
     l = ItemList.query.get_or_404(list_id)
     
-    if l.owner_id != current_user.id:
+    if l.owner != current_user:
         raise Forbidden
     
     db.session.delete(delete)

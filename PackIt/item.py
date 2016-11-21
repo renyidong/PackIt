@@ -5,7 +5,7 @@ from werkzeug.exceptions import BadRequest, Forbidden, NotFound
 from distutils.util import strtobool
 
 from . import app
-from .database import db, Item
+from .database import db, Item, ItemList
 
 
 @app.route("/item", methods=["POST"])
@@ -14,10 +14,9 @@ def item_new():
     """Create a new item, return id of new item"""
     title = request.form['name']
     category = request.form.get('categoryName')
-    owner_id = current_user.id
-    list_id = request.form['list_id']
+    list = ItemList.query.get_or_404(request.form['list_id'])
 
-    i = Item.new(title, category, owner_id, list_id)
+    i = Item.new(title, category, current_user, list)
     
     db.session.add(i)
     db.session.commit()
@@ -30,15 +29,15 @@ def item_put(item_id):
     All properties are optional, only specified properties are updated."""
     i = Item.query.get_or_404(item_id)
     
-    if i.owner_id != current_user.id:
+    if i.owner != current_user:
         raise Forbidden
     
     if 'name' in request.form:
         i.title = request.form['name']
     if 'category_name' in request.form:
         i.category = request.form['category_name']
-    if 'list_id' in request.form:
-        i.list_id = request.form['list_id']
+    if 'list' in request.form:
+        i.list = ItemList.query.get_or_404(request.form['list_id'])
     if 'public' in request.form:
         i.public = strtobool(request.form['public'])
     if 'checked' in request.form:
@@ -60,7 +59,7 @@ def item_del(item_id):
     """Delete an item all list. current _user must be owner of the item."""
     i = Item.query.get_or_404(item_id)
     
-    if i.owner_id != current_user.id:
+    if i.owner != current_user:
         raise Forbidden
     
     db.session.delete(i)
