@@ -1,5 +1,6 @@
 from flask import request, render_template, url_for, redirect
 from flask_login import current_user, login_required
+from werkzeug.exception import BadRequest, Forbidden, NotFound
 
 from . import app
 from .database import ItemList
@@ -7,13 +8,20 @@ from .database import ItemList
 @app.route("/list/<list_id>")
 @login_required
 def packing_list(list_id):
+    l = ItemList.query.get(list_id)
+    
+    if l is None:
+        raise NotFound
+    if l.owner_id != current_user.id:
+        raise Forbidden
+    
     packingList = []
-    for i in ItemList.query.get(list_id).items:
+    for i in l.items:
         packingList.append({
             'name': i.title,
             'id': i.id,
         })
-    return render_template('packing.html', packingList=packingList)
+    return render_template('packing.html', packingList=packingList, list_id=l.id)
 
 @app.route("/list/<list_id>", methods=['POST'])
 @login_required

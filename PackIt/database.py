@@ -107,6 +107,7 @@ class Item(db.Model):
     __tablename__ = 'item'
     id = Column(UUID, primary_key=True)
     title = Column(String(100))
+    category = Column(String(100))
     public = Column(Boolean)
     owner_id = Column(UUID, ForeignKey('user.id'))
     owner = relationship('User')
@@ -117,7 +118,7 @@ class Item(db.Model):
     checked_by = relationship("User", secondary='checked', uselist=True)
     
     @classmethod
-    def new(cls, title, owner_id, list_id, activity_id=None, public=False):
+    def new(cls, title, category, owner_id, list_id, activity_id=None, public=False):
         i = cls()
         i.id = UUID.new_random()
         i.title = title
@@ -163,7 +164,7 @@ def inject_test_data():
         db.session.add(item_list)
     
         for i in range(5):
-            item = Item.new('Test item %i'%i,
+            item = Item.new('Test item %i'%i, 'Category %i'%i,
                             user.id, item_list.id,public=False)
             db.session.add(item)
     db.session.commit()
