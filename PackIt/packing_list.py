@@ -1,11 +1,11 @@
 from flask import request, render_template, url_for, redirect
 from flask_login import current_user, login_required
-from werkzeug.exception import BadRequest, Forbidden, NotFound
+from werkzeug.exceptions import BadRequest, Forbidden, NotFound
 
 from . import app
 from .database import ItemList
 
-@app.route("/list/<list_id>")
+@app.route("/list/<list_id>", methods=['GET'])
 @login_required
 def packing_list(list_id):
     l = ItemList.query.get(list_id)

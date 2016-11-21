@@ -1,6 +1,6 @@
 from flask import request, render_template, url_for, redirect
 from flask_login import current_user, login_required
-from werkzeug.exception import BadRequest, Forbidden, NotFound
+from werkzeug.exceptions import BadRequest, Forbidden, NotFound
 
 from . import app
 from .database import db, Item
@@ -53,7 +53,7 @@ def item_del(item_id):
     if i.owner_id != current_user.id:
         raise Forbidden
     
-    db.session.del(delete)
+    db.session.delete(delete)
     db.session.commit()
     return 'OK'
 
@@ -63,11 +63,11 @@ def item_del(item_id):
 @login_required
 def item_put_uni():
     item_put(item_id = request.form['id'])
-    return redirect(url_for('packing_list'), list_id=request.headers.['Referer'])
+    return redirect(url_for('packing_list'), list_id=request.form['list_id'])
     
 @app.route("/item/del", methods=["POST"])
 @login_required
 def item_del_uni():
     item_del(item_id = request.form['id'])
-    return redirect(url_for('packing_list'), list_id=request.headers.['Referer'])
+    return redirect(url_for('packing_list'), list_id=request.form['list_id'])
     
