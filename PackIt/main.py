@@ -1,3 +1,4 @@
+"""Request handler for homepage"""
 from flask import request, render_template, send_from_directory, flash, url_for
 from flask_login import current_user, login_required
 

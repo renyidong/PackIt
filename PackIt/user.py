@@ -1,3 +1,5 @@
+"""Manage user information and state.
+Request handlers for /login, /logout and /signup."""
 from flask import request, session, render_template, abort, redirect, flash, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required
 from urlparse import urlparse, urljoin

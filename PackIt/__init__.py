@@ -1,4 +1,8 @@
 #!/bin/env python3
+"""Entrypoint of this module.
+Initialize all config. 
+Import all underlying components."""
+
 from flask import Flask
 __all__ = ['app']
 

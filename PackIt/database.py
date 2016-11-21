@@ -1,3 +1,12 @@
+"""Definition of SQLAlchemy models.
+See documentation for Model details.
+Import modle as `from .database import <Model>`
+
+Cli commands provided, run as `FLASK_APP=PackIt/__init__.py flask <command>`:
+init_db() initializes database table schema.
+drop_db() drops all tables.
+inject_test_data() prepares database for testing with some example data."""
+
 from . import app
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.types import TypeDecorator, CHAR
@@ -134,11 +143,18 @@ class Checked(db.Model):
     user_id = Column(UUID, ForeignKey('user.id'))
     item_id = Column(UUID, ForeignKey('item.id'))
 
+@app.cli.command()
+def init_db():
+    db.create_all()
+
+@app.cli.command()
+def drop_db():
+    db.drop_all()
 
 @app.cli.command()
 def inject_test_data():
-    db.drop_all()
-    db.create_all()
+    drop_db()
+    init_db()
     user = User.new('test_user', 'test@example.com', 'password')
     user.id = 'urn:uuid:12345678-1234-5678-1234-567812345678'
     db.session.add(user)

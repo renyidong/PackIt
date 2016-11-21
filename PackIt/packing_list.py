@@ -1,3 +1,4 @@
+"""Request handler for all /list/* locations."""
 from flask import request, render_template, url_for, redirect
 from flask_login import current_user, login_required
 from werkzeug.exceptions import BadRequest, Forbidden, NotFound

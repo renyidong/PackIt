@@ -1,3 +1,4 @@
+"""Request handler for all /friend/* locations."""
 from flask import request, render_template, flash
 
 from . import app
