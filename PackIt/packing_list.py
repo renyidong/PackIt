@@ -22,6 +22,7 @@ def packing_list(list_id):
             'name': i.title,
             'id': i.id,
             'public': i.public,
+            'checked' : current_user in i.checked_by,
         })
     return render_template('packing.html', packingList=packingList, list_id=l.id)
 
