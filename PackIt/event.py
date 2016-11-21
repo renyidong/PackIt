@@ -25,7 +25,7 @@ def post_new_event():
     e.destination = request.form['destination']
     e.begin = datetime.strptime(request.form['departureDate'], '%m-%d-%Y')
     e.end = e.begin + timedelta(days=int(request.form['lengthOfStay']))
-    if 'remindTimePicker' in request.form:
+    if request.form.get('remindTimePicker'):
         e.remind_at = datetime.strptime(request.form['remindTimePicker'], '%m-%d-%Y %H:%M')
     e.owner_id = current_user.id
     db.session.add(e)
