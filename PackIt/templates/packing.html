@@ -30,8 +30,12 @@
                     <ul class="list-group category-list" id="to_check_list">
                         {% for item in packingList %}
                             {% if not item['checked'] %}
-                                <li class="list-group-item">
-                            <form method="post" action="{{url_for('item_del_uni')}}" id="itemInforDetailForm">
+                                {% if item['public'] %}
+                                    <li class="list-group-item public-list-group-item list-active">
+                                {% else %}
+                                    <li class="list-group-item private-list-group-item list-active">
+                                {% endif %}
+                                    <form method="post" action="{{url_for('item_del_uni')}}" id="itemInforDetailForm">
                                 <div class="behind">
                                     <a href="#" class="ui-btn delete-btn">Delete</a>
                                     <a href="#" class="ui-btn edit-btn pull-left" data-toggle="modal" 
@@ -56,7 +60,7 @@
                                     </div>
                                 </div>
                             </form>
-                        </li>
+                                </li>
                             {% endif %}
                         {% endfor %}
                     </ul>
@@ -70,7 +74,11 @@
                     <ul class="list-group category-list" id="checked_list">
                         {% for item in packingList %}
                             {% if item['checked'] %}
-                                <li class="list-group-item">
+                                {% if item['public'] %}
+                                    <li class="list-group-item public-list-group-item list-active">
+                                {% else %}
+                                    <li class="list-group-item private-list-group-item list-active">
+                                {% endif %}
                                     <form method="post" action="{{url_for('item_del_uni')}}" id="itemInforDetailForm">
                                         <div class="behind">
                                             <a href="#" class="ui-btn delete-btn">Delete</a>
@@ -128,7 +136,7 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="showPackedMenu">
-                                <li><a id="showOnlyMyItems">Show only my items</a></li>
+                                <li><a id="showOnlyPrivateItems">Show only private items</a></li>
                                 <li><a id="showOnlyPublicItems">Show only public items</a></li>
                             </ul>
                         </div>
@@ -152,10 +160,11 @@
                 </button>
                 <h4 class="modal-title" id="addNewItemModelLabel">Create New Item</h4>
             </div>
-            <form method="post" action="{{url_for('item_new')}}" class="form-horizontal" id="addNewItemModelForm">
+            <form method="post" action="{{url_for('item_new_uni')}}" class="form-horizontal" id="addNewItemModelForm">
                 <div class="modal-body">
                     <div class="">
                         <label for="new-item-name" class="form-control-label">Item Name:</label>
+                        <input name="list_id" type="hidden" class="form-control" id="list-id" value="{{ list_id }}">
                         <input name="name" type="text" class="form-control" id="new-item-name" placeholder="* required" data-toggle="popover" 
                                 data-placement="top" data-content="Item Name Required">
                     </div>
@@ -247,11 +256,6 @@
                 var categoryName = $("#new-item-category-name").val();
                 if( itemName != "") {
                     $("#addNewItemModelForm").submit();
-                    //var newItem = createNewItem(itemName);
-                    
-                    //$("#to_check_list").append(newItem);
-                    //listOperation();
-                    //$('#itemDetail').modal('hide')
                 }else{
                     $("#new-item-name").popover('show');
                 }
@@ -259,6 +263,9 @@
             $("#packedButtonSubmit").on("tap", function() {
                $("#itemSelectForm").submit(); 
             });
+            $('#showOnlyPrivateItems').on("tap",function() {
+                $('.public-list-group-item').css("display","none");
+            })
                     function prevent_default(e) {
                         e.preventDefault();
                     }

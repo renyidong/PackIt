@@ -13,7 +13,7 @@ from .database import db, Item
 def item_new():
     """Create a new item, return id of new item"""
     title = request.form['name']
-    category = request.form.get('category_name')
+    category = request.form.get('categoryName')
     owner_id = current_user.id
     list_id = request.form['list_id']
 
@@ -63,7 +63,7 @@ def item_del(item_id):
     if i.owner_id != current_user.id:
         raise Forbidden
     
-    db.session.delete(delete)
+    db.session.delete(i)
     db.session.commit()
     return 'OK'
 
@@ -73,19 +73,19 @@ def item_del(item_id):
 def item_new_uni():
     """Create item given a browser form."""
     item_new()
-    return redirect(url_for('packing_list', list_id=request.form['list_id']))
+    return redirect(request.headers['Referer'])
     
 @app.route("/item/put", methods=["POST"])
 @login_required
 def item_put_uni():
     """Update item given a browser form."""
     item_put(item_id = request.form['id'])
-    return redirect(url_for('packing_list', list_id=request.form['list_id']))
+    return redirect(request.headers['Referer'])
     
 @app.route("/item/del", methods=["POST"])
 @login_required
 def item_del_uni():
     """Delete item given a browser form."""
     item_del(item_id = request.form['id'])
-    return redirect(url_for('packing_list', list_id=request.form['list_id']))
+    return redirect(request.headers['Referer'])
     
