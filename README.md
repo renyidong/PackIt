@@ -1,0 +1,2 @@
+# PackIt
+README is intentionallly left blank. As this project is under active developement, most documentation is kept with source code. 
